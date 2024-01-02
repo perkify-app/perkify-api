@@ -1,6 +1,6 @@
 import { Router } from 'express';
 const loyaltyRouter = Router();
-import { getSpecificLoyaltyCard, getAllLoyaltyCards } from '../controllers/loyalty-controller';
+import { getSpecificLoyaltyCard, getAllLoyaltyCards, patchLoyaltyCard } from '../controllers/loyalty-controller';
 
 loyaltyRouter
 .route('/')
@@ -8,6 +8,7 @@ loyaltyRouter
 
 loyaltyRouter
 .route('/:loyalty_card_id')
-.get(getSpecificLoyaltyCard);
+.get(getSpecificLoyaltyCard)
+.patch(patchLoyaltyCard);
 
 export default loyaltyRouter;
