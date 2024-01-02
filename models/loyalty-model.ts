@@ -16,3 +16,14 @@ export const specificLoyaltyCard = (req: any) => {
         return data.rows
     })
 };
+export const giveLoyaltyStamps = (req: any) => {
+    const { body, params } = req
+    return db.query(`
+    UPDATE loyalty_cards
+    SET points = points + $1
+    WHERE loyalty_card_id = $2
+    `, [body.inc_points, params.loyalty_card_id])
+    .then((data: any) => {
+    return data.rows
+})
+};
