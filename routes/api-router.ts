@@ -1,5 +1,7 @@
-const apiRouter = require('express').Router();
+import { Router } from 'express';
+import loyaltyRouter from './loyalty-router';
 
+const apiRouter = Router();
+apiRouter.use('/loyalty_cards', loyaltyRouter);
 
-module.exports = apiRouter;
-export {}
+export default apiRouter;
