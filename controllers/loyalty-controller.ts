@@ -1,5 +1,5 @@
 import { Request, Response, NextFunction } from 'express';
-const { specificLoyaltyCard, allLoyaltyCards } = require('../models/loyalty-model.ts')
+import { giveLoyaltyStamps, specificLoyaltyCard, allLoyaltyCards } from '../models/loyalty-model';
 
 export const getSpecificLoyaltyCard = (req: Request, res: Response, next: NextFunction) => {
     specificLoyaltyCard(req)
@@ -11,9 +11,18 @@ export const getSpecificLoyaltyCard = (req: Request, res: Response, next: NextFu
     })
 };
 export const getAllLoyaltyCards = (req: Request, res: Response, next: NextFunction) => {
-    allLoyaltyCards(req)
+    allLoyaltyCards()
     .then((data: any) => {
         res.status(200).send({ loyalty_cards: data[0] })
+    })
+    .catch((err: any) => {
+        next(err)
+    })
+};
+export const patchLoyaltyCard = (req: Request, res: Response, next: NextFunction) => {
+    giveLoyaltyStamps(req)
+    .then((data: any) => {
+        res.status(200).send({ loyalty_card: data[0] })
     })
     .catch((err: any) => {
         next(err)
