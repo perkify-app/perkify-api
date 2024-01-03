@@ -13,8 +13,6 @@ export default async function seed ({ loyaltyPrograms, loyaltyCards, users, merc
   await db.query(`DROP TABLE IF EXISTS merchants;`);
   await db.query(`DROP TABLE IF EXISTS users;`);
 
-  console.log("DELETED");
-
   //Create
   await db.query(`
     CREATE TABLE users (
@@ -52,8 +50,6 @@ export default async function seed ({ loyaltyPrograms, loyaltyCards, users, merc
       );`
   );
 
-  console.log("CREATED");
-
   //Seed  
   const insertUsersQueryStr = format(
     'INSERT INTO users ( id, name ) VALUES %L;',
@@ -78,6 +74,4 @@ export default async function seed ({ loyaltyPrograms, loyaltyCards, users, merc
   await db.query(insertMerchantsQueryStr);
   await db.query(insertLoyaltyProgramsQueryStr);
   await db.query(insertLoyaltyCardsQueryStr);
-
-  console.log("SEEDED");
 };
