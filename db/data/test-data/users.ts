@@ -1,4 +1,6 @@
-module.exports = [
+import IUser from "../../interfaces/User";
+
+export default [
   {
     id: 'M1',
     name: 'jonny',
@@ -23,4 +25,4 @@ module.exports = [
     id: 'U3',
     name: 'paul',
   }
-];
+] as IUser[];

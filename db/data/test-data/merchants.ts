@@ -1,4 +1,6 @@
-module.exports = [
+import Merchant from "../../interfaces/Merchant";
+
+export default [
   {
     id: "A",
     user_id: "M1",
@@ -10,7 +12,7 @@ module.exports = [
       "https://images.pexels.com/photos/158651/news-newsletter-newspaper-information-158651.jpeg?w=700&h=700",
   },
   {
-    merchant_id: "B",
+    id: "B",
     user_id: "M2",
     company_name: "shopB",
     description: "This is the shop B",
@@ -20,7 +22,7 @@ module.exports = [
       "https://images.pexels.com/photos/158651/news-newsletter-newspaper-information-158651.jpeg?w=700&h=700",
   },
   {
-    merchant_id: "C",
+    id: "C",
     user_id: "M3",
     company_name: "shopC",
     description: "This is the shop C",
@@ -29,4 +31,4 @@ module.exports = [
     logo_url:
       "https://images.pexels.com/photos/158651/news-newsletter-newspaper-information-158651.jpeg?w=700&h=700",
   }
-];
+] as Merchant[];

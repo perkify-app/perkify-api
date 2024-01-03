@@ -1,12 +1,19 @@
-const format = require('pg-format');
-const db = require('../connection');
+import ILoyaltyCard from "../interfaces/LoyaltyCard";
+import ILoyaltyProgram from "../interfaces/LoyaltyProgram";
+import IMerchant from "../interfaces/Merchant";
+import IUser from "../interfaces/User";
 
-const seed = async ({ loyaltyPrograms, loyaltyCards, users, merchants }) => {
+import format from "pg-format"
+import db from "../connection";
+
+export default async function seed ({ loyaltyPrograms, loyaltyCards, users, merchants }: { loyaltyPrograms: ILoyaltyProgram[], loyaltyCards: ILoyaltyCard[], users: IUser[], merchants: IMerchant[] }) {
   //Delete
   await db.query(`DROP TABLE IF EXISTS loyalty_cards;`);
   await db.query(`DROP TABLE IF EXISTS loyalty_programs;`);
   await db.query(`DROP TABLE IF EXISTS merchants;`);
   await db.query(`DROP TABLE IF EXISTS users;`);
+
+  console.log("DELETED");
 
   //Create
   await db.query(`
@@ -45,6 +52,8 @@ const seed = async ({ loyaltyPrograms, loyaltyCards, users, merchants }) => {
       );`
   );
 
+  console.log("CREATED");
+
   //Seed  
   const insertUsersQueryStr = format(
     'INSERT INTO users ( id, name ) VALUES %L;',
@@ -69,6 +78,6 @@ const seed = async ({ loyaltyPrograms, loyaltyCards, users, merchants }) => {
   await db.query(insertMerchantsQueryStr);
   await db.query(insertLoyaltyProgramsQueryStr);
   await db.query(insertLoyaltyCardsQueryStr);
-};
 
-module.exports = seed;
+  console.log("SEEDED");
+};

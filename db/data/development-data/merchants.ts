@@ -1,4 +1,6 @@
-module.exports = [
+import Merchant from "../../interfaces/Merchant";
+
+export default [
   {
     id: "A",
     user_id: "M1",
@@ -29,4 +31,4 @@ module.exports = [
     logo_url:
       "https://images.pexels.com/photos/158651/news-newsletter-newspaper-information-158651.jpeg?w=700&h=700",
   }
-];
+] as Merchant[];
