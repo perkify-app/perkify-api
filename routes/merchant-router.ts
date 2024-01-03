@@ -9,6 +9,6 @@ merchantRouter
 merchantRouter
 .route('/:merchant_id')
 .get(getSpecificMerchant)
-//.patch(updateMerchant);
+.patch(updateMerchant);
 
 export default merchantRouter;
