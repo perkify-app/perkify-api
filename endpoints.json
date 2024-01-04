@@ -1,0 +1,89 @@
+{
+    "GET /api": {
+        "description": "serves a JSON file showing all available API endpoints"
+    },
+    "GET /api/loyalty_cards": {
+        "description": "serves an array of all loyalty cards",
+        "example response": {
+            "loyalty_cards": [
+                {
+                  "id": 1,
+                  "loyalty_program_id": 1,
+                  "user_id": "U1",
+                  "points": 0,
+                  "created_at": "2024-01-04T09:10:53.531Z"
+                }
+            ]
+        }
+    },
+    "GET /api/loyalty_cards/:loyalty_card_id": {
+        "description": "serves an object containing the loyalty card with that specific id",
+        "example response": {
+            "loyalty_card": {
+                "id": 2,
+                "loyalty_program_id": 2,
+                "user_id": "U2",
+                "points": 1,
+                "created_at": "2024-01-04T09:10:53.531Z"
+              }
+        }
+    },
+    "PATCH /api/loyalty_cards/:loyalty_card_id": {
+        "description": "allows loyalty_cards points to be updated",
+        "example patch": {
+            "inc_points": 4
+        }
+    },
+    "GET /api/merchants": {
+        "description": "serves an array of all merchants",
+        "example response": {
+            "merchants": [
+                {
+                  "id": "A",
+                  "user_id": "M1",
+                  "company_name": "shopA",
+                  "description": "This is the shop A",
+                  "address": "A Street",
+                  "phone_no": "0711111111",
+                  "logo_url": "https://images.pexels.com/photos/158651/news-newsletter-newspaper-information-158651.jpeg?w=700&h=700"
+                }
+            ]
+        }
+    },
+    "GET /api/merchants/:merchant_id": {
+        "description": "serves an object showing one specific merchant",
+        "example response": {
+            "merchant": {
+                "id": "B",
+                "user_id": "M2",
+                "company_name": "shopB",
+                "description": "This is the shop B",
+                "address": "B Street",
+                "phone_no": "0722222222",
+                "logo_url": "https://images.pexels.com/photos/158651/news-newsletter-newspaper-information-158651.jpeg?w=700&h=700"
+              }
+        }
+    },
+    "PATCH /api/merchants/:merchant_id": {
+        "description": "allows information for a specific merchant to be changed",
+        "example patch": {
+            "phone_no": 2343323,
+            "address": "A Street"
+        }
+    },
+    "DELETE /api/:user_id/:loyalty_card_id": {
+        "description": "allows a loyalty card to be deleted for a specific user"
+    },
+    "GET /api/users/:user_id": {
+        "description": "shows an object showing a specific user",
+        "example response": {
+            "user": {
+                "id": "U2",
+                "name": "sam"
+              }
+        }
+    },
+    "DELETE /api/users/:user_id": {
+        "description": "allows a specific user to be deleted"
+    }
+}
