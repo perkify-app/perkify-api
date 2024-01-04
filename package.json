@@ -3,13 +3,13 @@
   "version": "1.0.0",
   "description": "perkify-api",
   "main": "./dist/listen.js",
-  "type":"module",
   "scripts": {
     "setup-dbs": "psql -f ./db/setup.sql",
     "seed": "ts-node ./db/seeds/run-seed.ts",
     "test": "jest",
     "prepare": "husky install",
-    "start": "ts-node listen.ts",
+    "build": "npm install && tsc",
+    "start": "./dist/listen.js",
     "seed-prod": "NODE_ENV=production npm run seed"
   },
   "repository": {
