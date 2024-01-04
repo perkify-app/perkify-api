@@ -2,7 +2,8 @@
   "name": "perkify-api",
   "version": "1.0.0",
   "description": "perkify-api",
-  "main": "index.js",
+  "main": "./dist/listen.js",
+  "type":"module",
   "scripts": {
     "setup-dbs": "psql -f ./db/setup.sql",
     "seed": "ts-node ./db/seeds/run-seed.ts",

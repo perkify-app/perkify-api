@@ -1,11 +1,9 @@
 import { Router } from 'express';
-import getEndpointsInfo from '../controllers/api-controller';
-
 const endpointsRouter = Router();
-
+import { getEndpointsJson } from '../controllers/endpoints-controller'
 
 endpointsRouter
 .route('/')
-.get(getEndpointsInfo);
+.get(getEndpointsJson);
 
 export default endpointsRouter;
