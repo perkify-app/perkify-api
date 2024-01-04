@@ -2,12 +2,6 @@ import request from "supertest";
 import app from "../app";
 import endpointsInfo from "../endpoints.json"
 
-describe("Test husky",() => {
-    test("test", ()=> {
-        expect(true).toBe(false);
-        expect(true).toBe(false);
-    });
-})
 
 describe("/api", () => {
     test("GET:200 sends an object describing all the endpoints availables to the client", () => {
