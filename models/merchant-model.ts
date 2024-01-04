@@ -1,7 +1,7 @@
 import db from "../db/connection";
 
 export const allMerchants = () => {
-    return db.query(`SELECT * FROM merchant_info;`)
+    return db.query(`SELECT * FROM merchants;`)
     .then((data: any) => {
         return data.rows;
     })
@@ -9,8 +9,8 @@ export const allMerchants = () => {
 export const specificMerchant = (req: any) => {
     const { params } = req
         return db.query(`
-        SELECT * FROM merchant_info
-        WHERE merchant_id = $1
+        SELECT * FROM merchants
+        WHERE user_id = M$1
         `, [params.merchant_id])
     .then((data: any) => {
         return data.rows
@@ -19,7 +19,7 @@ export const specificMerchant = (req: any) => {
 export const addMerchantInfo = (req: any) => {
     const { body, params } = req
     const queryValues = []
-    let queryStr = 'UPDATE merchant_info'
+    let queryStr = 'UPDATE merchants'
     if (body) {
         queryStr += ` SET`
         if (body.company_name) {
@@ -54,17 +54,17 @@ export const addMerchantInfo = (req: any) => {
                 queryStr += ` address = $${queryValues.length}`
             }
         }
-        if (body.phone_number) {
-            queryValues.push(body.phone_number)
+        if (body.phone_no) {
+            queryValues.push(body.phone_no)
             if (queryValues.length > 1) {
-                queryStr += `, phone_number = $${queryValues.length}`
+                queryStr += `, phone_no = $${queryValues.length}`
             } else {
-                queryStr += ` phone_number = $${queryValues.length}`
+                queryStr += ` phone_no = $${queryValues.length}`
             }
         }
     }
     queryValues.push(params.merchant_id)
-    queryStr += ` WHERE merchant_id = $${queryValues.length}`
+    queryStr += ` WHERE user_id = M$${queryValues.length}`
     return db.query(queryStr, queryValues)
     .then((data: any) => {
     return data.rows
