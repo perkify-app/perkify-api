@@ -85,5 +85,17 @@
     },
     "DELETE /api/users/:user_id": {
         "description": "allows a specific user to be deleted"
+    },
+    "GET /api/loyalty_programs/:merchant_id": {
+    "description": "serves an object containing the loyalty programs with that specific id",
+    "example response": {
+        "loyalty_programs": {
+            "id": 1,
+            "merchant_id": "A",
+            "name": "programShopA",
+            "required_points": 6,
+            "created_at": "2024-01-02T16:01:13.985Z"
+          }
     }
+}
 }
