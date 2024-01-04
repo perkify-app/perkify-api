@@ -5,6 +5,7 @@ import endpointsInfo from "../endpoints.json"
 describe("Test husky",() => {
     test("test", ()=> {
         expect(true).toBe(false);
+        expect(true).toBe(false);
     });
 })
 
