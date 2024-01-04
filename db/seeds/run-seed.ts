@@ -1,6 +1,4 @@
-//const devData = require('../data/development-data/index.ts');
-import devData from "../data/development-data/index"
-
+import devData from "../data/development-data/index";
 import seed from "./seed";
 import db from "../connection";
 
