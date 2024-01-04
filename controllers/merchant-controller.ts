@@ -13,7 +13,7 @@ export const getSpecificMerchant = (req: Request, res: Response, next: NextFunct
 export const getAllMerchants = (req: Request, res: Response, next: NextFunction) => {
     allMerchants()
     .then((data: any) => {
-        res.status(200).send({ merchants: data[0] })
+        res.status(200).send({ merchants: data })
     })
     .catch((err: any) => {
         next(err)
