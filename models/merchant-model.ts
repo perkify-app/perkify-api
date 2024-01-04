@@ -1,4 +1,4 @@
-const db = require('../db/connection');
+import db from "../db/connection";
 
 export const allMerchants = () => {
     return db.query(`SELECT * FROM merchant_info;`)

@@ -1,4 +1,4 @@
-const db = require('../db/connection');
+import db from "../db/connection";
 
 export const specificUser = (req: any) => {
     const { params } = req

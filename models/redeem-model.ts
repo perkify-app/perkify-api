@@ -1,4 +1,5 @@
-const db = require('../db/connection');
+import db from "../db/connection";
+
 export const redeemLoyaltyCard = (req: any) => {
     const { params } = req
         return db.query(`

@@ -13,7 +13,7 @@ export const getSpecificLoyaltyCard = (req: Request, res: Response, next: NextFu
 export const getAllLoyaltyCards = (req: Request, res: Response, next: NextFunction) => {
     allLoyaltyCards()
     .then((data: any) => {
-        res.status(200).send({ loyalty_cards: data[0] })
+        res.status(200).send({ loyalty_cards: data })
     })
     .catch((err: any) => {
         next(err)
