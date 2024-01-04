@@ -8,8 +8,7 @@
     "seed": "ts-node ./db/seeds/run-seed.ts",
     "test": "jest",
     "prepare": "husky install",
-    "build": "tsc",
-    "start": "node ./dist/listen.js",
+    "start": "ts-node listen.ts",
     "seed-prod": "NODE_ENV=production npm run seed"
   },
   "repository": {
