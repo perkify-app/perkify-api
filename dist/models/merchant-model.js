@@ -16,8 +16,8 @@ const specificMerchant = (req) => {
     const { params } = req;
     return connection_1.default.query(`
         SELECT * FROM merchants
-        WHERE user_id = $1
-        `, [params.merchant_id])
+        WHERE id = $1
+        `, [params.id])
         .then((data) => {
         return data.rows;
     });
@@ -75,8 +75,8 @@ const addMerchantInfo = (req) => {
             }
         }
     }
-    queryValues.push(params.merchant_id);
-    queryStr += ` WHERE user_id = $${queryValues.length}`;
+    queryValues.push(params.id);
+    queryStr += ` WHERE id = $${queryValues.length}`;
     return connection_1.default.query(queryStr, queryValues)
         .then((data) => {
         return data.rows;
