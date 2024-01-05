@@ -5,8 +5,16 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.giveLoyaltyStamps = exports.specificLoyaltyCard = exports.allLoyaltyCards = void 0;
 const connection_1 = __importDefault(require("../db/connection"));
-const allLoyaltyCards = () => {
-    return connection_1.default.query(`SELECT * FROM loyalty_cards;`)
+const allLoyaltyCards = (req) => {
+    let { sort_by = 'points', order = 'desc' } = req.query;
+    if (sort_by.toLowerCase() !== 'points' && sort_by.toLowerCase() !== 'created_at')
+        sort_by = 'id';
+    if (order.toLowerCase() !== 'desc' && order.toLowerCase() !== 'asc')
+        order = 'desc';
+    const queryStr = `
+    SELECT * FROM loyalty_cards
+    ORDER BY ${sort_by} ${order}`;
+    return connection_1.default.query(queryStr)
         .then((data) => {
         return data.rows;
     });
