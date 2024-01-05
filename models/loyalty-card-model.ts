@@ -6,6 +6,7 @@ export const allLoyaltyCards = (req: any) => {
     if (order.toLowerCase() !== 'desc' && order.toLowerCase() !== 'asc') order = 'desc'
     const queryStr = `
     SELECT * FROM loyalty_cards
+    JOIN loyalty_programs ON loyalty_cards.loyalty_program_id = loyalty_programs.id
     ORDER BY ${sort_by} ${order}`
     return db.query(queryStr)
     .then((data: any) => {

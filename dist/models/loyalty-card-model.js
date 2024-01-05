@@ -13,6 +13,7 @@ const allLoyaltyCards = (req) => {
         order = 'desc';
     const queryStr = `
     SELECT * FROM loyalty_cards
+    JOIN loyalty_programs ON loyalty_cards.loyalty_program_id = loyalty_programs.id
     ORDER BY ${sort_by} ${order}`;
     return connection_1.default.query(queryStr)
         .then((data) => {
