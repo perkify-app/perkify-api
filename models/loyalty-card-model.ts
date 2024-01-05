@@ -12,8 +12,8 @@ export const specificLoyaltyCard = (req: any) => {
         SELECT *
         FROM loyalty_cards
         JOIN loyalty_programs ON loyalty_cards.loyalty_program_id = loyalty_programs.id
-        WHERE user_id = $1
-        `, [params.user_id])
+        WHERE loyalty_cards.id = $1
+        `, [params.loyalty_card_id])
     .then((data: any) => {
         return data.rows
     })

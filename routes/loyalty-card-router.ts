@@ -7,7 +7,7 @@ loyaltyCardRouter
 .get(getAllLoyaltyCards);
 
 loyaltyCardRouter
-.route('/:user_id')
+.route('/:loyalty_card_id')
 .get(getSpecificLoyaltyCard)
 .patch(patchLoyaltyCard);
 

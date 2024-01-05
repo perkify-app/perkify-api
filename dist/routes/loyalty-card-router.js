@@ -7,7 +7,7 @@ loyaltyCardRouter
     .route('/')
     .get(loyalty_card_controller_1.getAllLoyaltyCards);
 loyaltyCardRouter
-    .route('/:user_id')
+    .route('/:loyalty_card_id')
     .get(loyalty_card_controller_1.getSpecificLoyaltyCard)
     .patch(loyalty_card_controller_1.patchLoyaltyCard);
 exports.default = loyaltyCardRouter;
