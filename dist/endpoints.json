@@ -4,19 +4,24 @@
     },
     "GET /api/loyalty_cards": {
         "description": "serves an array of all loyalty cards",
-        "example response": {
+        "queries": ["user_id", "sort_by", "order"],
+        "example url query": "/api/loyalty_cards?user_id=U2&sort_by=points&order=desc",
+        "example response (with no query)": {
             "loyalty_cards": [
                 {
                     "id": 1,
                     "loyalty_program_id": 1,
                     "user_id": "U1",
                     "points": 0,
-                    "created_at": "2024-01-04T09:10:53.531Z"
+                    "created_at": "2024-01-04T15:43:47.508Z",
+                    "merchant_id": "A",
+                    "name": "programShopA",
+                    "required_points": 6
                 }
             ]
         }
     },
-    "GET /api/loyalty_cards/:user_id": {
+    "GET /api/loyalty_cards/:loyalty_card_id": {
         "description": "serves an object containing the loyalty card with that specific id",
         "example response": {
             "loyalty_card": {

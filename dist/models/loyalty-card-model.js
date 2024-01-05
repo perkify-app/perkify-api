@@ -6,15 +6,17 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.giveLoyaltyStamps = exports.specificLoyaltyCard = exports.allLoyaltyCards = void 0;
 const connection_1 = __importDefault(require("../db/connection"));
 const allLoyaltyCards = (req) => {
-    let { sort_by = 'points', order = 'desc' } = req.query;
+    let { sort_by = 'points', order = 'desc', user_id } = req.query;
     if (sort_by.toLowerCase() !== 'points' && sort_by.toLowerCase() !== 'created_at')
         sort_by = 'id';
     if (order.toLowerCase() !== 'desc' && order.toLowerCase() !== 'asc')
         order = 'desc';
-    const queryStr = `
-    SELECT * FROM loyalty_cards
-    JOIN loyalty_programs ON loyalty_cards.loyalty_program_id = loyalty_programs.id
-    ORDER BY ${sort_by} ${order}`;
+    let queryStr = `SELECT * FROM loyalty_cards`;
+    queryStr += ` JOIN loyalty_programs ON loyalty_cards.loyalty_program_id = loyalty_programs.id`;
+    if (user_id)
+        queryStr += ` WHERE loyalty_cards.user_id = '${user_id}'`;
+    queryStr += ` ORDER BY ${sort_by} ${order}`;
+    console.log(queryStr);
     return connection_1.default.query(queryStr)
         .then((data) => {
         return data.rows;
