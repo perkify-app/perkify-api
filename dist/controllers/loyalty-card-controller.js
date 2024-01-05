@@ -13,7 +13,7 @@ const getSpecificLoyaltyCard = (req, res, next) => {
 };
 exports.getSpecificLoyaltyCard = getSpecificLoyaltyCard;
 const getAllLoyaltyCards = (req, res, next) => {
-    (0, loyalty_card_model_1.allLoyaltyCards)()
+    (0, loyalty_card_model_1.allLoyaltyCards)(req)
         .then((data) => {
         res.status(200).send({ loyalty_cards: data });
     })
