@@ -10,8 +10,8 @@ export const specificMerchant = (req: any) => {
     const { params } = req
         return db.query(`
         SELECT * FROM merchants
-        WHERE user_id = $1
-        `, [params.merchant_id])
+        WHERE id = $1
+        `, [params.id])
     .then((data: any) => {
         return data.rows
     })
@@ -63,8 +63,8 @@ export const addMerchantInfo = (req: any) => {
             }
         }
     }
-    queryValues.push(params.merchant_id)
-    queryStr += ` WHERE user_id = $${queryValues.length}`
+    queryValues.push(params.id)
+    queryStr += ` WHERE id = $${queryValues.length}`
     return db.query(queryStr, queryValues)
     .then((data: any) => {
     return data.rows

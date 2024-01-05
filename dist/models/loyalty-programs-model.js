@@ -10,7 +10,7 @@ const merchantLoyaltyPrograms = (req) => {
     return connection_1.default.query(`
         SELECT * FROM loyalty_programs
         WHERE merchant_id = $1
-        `, [params.merchant_id])
+        `, [params.id])
         .then((data) => {
         return data.rows;
     });

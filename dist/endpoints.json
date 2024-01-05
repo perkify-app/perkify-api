@@ -1,10 +1,12 @@
 {
     "GET /api": {
+        "example url": "/api",
         "description": "serves a JSON file showing all available API endpoints"
     },
     "GET /api/loyalty_cards": {
         "description": "serves an array of all loyalty cards",
         "queries": ["user_id", "sort_by", "order"],
+        "example url": "/api/loyalty_cards",
         "example url query": "/api/loyalty_cards?user_id=U2&sort_by=points&order=desc",
         "example response (with no query)": {
             "loyalty_cards": [
@@ -23,6 +25,7 @@
     },
     "GET /api/loyalty_cards/:loyalty_card_id": {
         "description": "serves an object containing the loyalty card with that specific id",
+        "example url": "/api/loyalty_cards/1",
         "example response": {
             "loyalty_card": {
                 "id": 1,
@@ -44,6 +47,7 @@
     },
     "GET /api/merchants": {
         "description": "serves an array of all merchants",
+        "example url": "/api/merchants",
         "example response": {
             "merchants": [
                 {
@@ -58,8 +62,9 @@
             ]
         }
     },
-    "GET /api/merchants/:merchant_id": {
+    "GET /api/merchants/:id": {
         "description": "serves an object showing one specific merchant",
+        "example url": "/api/merchants/A",
         "example response": {
             "merchant": {
                 "id": "B",
@@ -72,11 +77,42 @@
             }
         }
     },
-    "PATCH /api/merchants/:merchant_id": {
+    "PATCH /api/merchants/:id": {
         "description": "allows information for a specific merchant to be changed",
         "example patch": {
             "phone_no": 2343323,
             "address": "A Street"
+        }
+    },
+    "GET /api/merchants/:id/cards": {
+        "description": "serves an array showing loyalty_cards for this specific merchant",
+        "example url": "/api/merchants/A/cards",
+        "example response": {
+            "loyalty_cards": [
+                {
+                    "id": 1,
+                    "loyalty_program_id": 1,
+                    "user_id": "U1",
+                    "points": 0,
+                    "created_at": "2024-01-04T15:43:47.508Z",
+                    "merchant_id": "A",
+                    "name": "programShopA",
+                    "required_points": 6
+                }
+            ]
+        }
+    },
+    "GET /api/merchants/:id/programs": {
+        "description": "serves an object showing loyalty_cards for this specific merchant",
+        "example url": "/api/merchants/A/programs",
+        "example response": {
+            "loyalty_programs": {
+                "id": 1,
+                "merchant_id": "A",
+                "name": "programShopA",
+                "required_points": 6,
+                "created_at": "2024-01-04T15:43:47.508Z"
+            }
         }
     },
     "DELETE /api/:user_id/:loyalty_card_id": {
@@ -84,6 +120,7 @@
     },
     "GET /api/users/:user_id": {
         "description": "shows an object showing a specific user",
+        "example url": "/api/users/U2",
         "example response": {
             "user": {
                 "id": "U2",
@@ -96,6 +133,7 @@
     },
     "GET /api/loyalty_programs/:merchant_id": {
         "description": "serves an object containing the loyalty programs with that specific id",
+        "example url": "/api/loyalty_programs/A",
         "example response": {
             "loyalty_programs": {
                 "id": 1,

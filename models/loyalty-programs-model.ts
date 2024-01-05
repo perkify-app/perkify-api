@@ -5,7 +5,7 @@ export const merchantLoyaltyPrograms = (req: any) => {
         return db.query(`
         SELECT * FROM loyalty_programs
         WHERE merchant_id = $1
-        `, [params.merchant_id])
+        `, [params.id])
     .then((data: any) => {
         return data.rows
     })

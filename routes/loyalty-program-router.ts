@@ -3,7 +3,7 @@ const loyaltyProgramRouter = Router();
 import { getAllMerchantPrograms } from '../controllers/loyalty-programs-controller';
 
 loyaltyProgramRouter
-.route('/:merchant_id')
+.route('/:id')
 .get(getAllMerchantPrograms)
 //.post();
 
