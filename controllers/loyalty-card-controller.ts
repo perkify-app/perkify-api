@@ -11,7 +11,7 @@ export const getSpecificLoyaltyCard = (req: Request, res: Response, next: NextFu
     })
 };
 export const getAllLoyaltyCards = (req: Request, res: Response, next: NextFunction) => {
-    allLoyaltyCards()
+    allLoyaltyCards(req)
     .then((data: any) => {
         res.status(200).send({ loyalty_cards: data })
     })
