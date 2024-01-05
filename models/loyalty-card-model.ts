@@ -1,7 +1,13 @@
 import db from "../db/connection";
 
-export const allLoyaltyCards = () => {
-    return db.query(`SELECT * FROM loyalty_cards;`)
+export const allLoyaltyCards = (req: any) => {
+    let { sort_by='points', order='desc' } = req.query
+    if (sort_by.toLowerCase() !== 'points' && sort_by.toLowerCase() !== 'created_at') sort_by = 'id'
+    if (order.toLowerCase() !== 'desc' && order.toLowerCase() !== 'asc') order = 'desc'
+    const queryStr = `
+    SELECT * FROM loyalty_cards
+    ORDER BY ${sort_by} ${order}`
+    return db.query(queryStr)
     .then((data: any) => {
         return data.rows;
     })
