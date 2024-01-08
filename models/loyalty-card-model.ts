@@ -7,7 +7,6 @@ export const allLoyaltyCards = (req: any) => {
     if (order.toLowerCase() !== 'desc' && order.toLowerCase() !== 'asc') order = 'desc'
     let queryStr = `SELECT * FROM loyalty_cards`
     queryStr += ` JOIN loyalty_programs ON loyalty_cards.loyalty_program_id = loyalty_programs.id`
-    console.log(user_id, merchant_id, params.id)
     if (user_id) queryStr += ` WHERE loyalty_cards.user_id = '${user_id}'`
     if (merchant_id || params.id) {
         if (merchant_id && user_id) {
