@@ -4,7 +4,7 @@ import { specificUser, deleteSpecificUser } from '../models/users-model'
 export const getUser = (req: Request, res: Response, next: NextFunction) => {
     specificUser(req)
     .then((data: any) => {
-        res.status(200).send({ user: data[0] })
+        res.status(200).send({ user: data })
     })
     .catch((err: any) => {
         next(err)

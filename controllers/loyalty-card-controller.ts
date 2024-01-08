@@ -4,7 +4,7 @@ import { giveLoyaltyStamps, specificLoyaltyCard, allLoyaltyCards } from '../mode
 export const getSpecificLoyaltyCard = (req: Request, res: Response, next: NextFunction) => {
     specificLoyaltyCard(req)
     .then((data: any) => {
-        res.status(200).send({ loyalty_card: data[0] })
+        res.status(200).send({ loyalty_card: data })
     })
     .catch((err: any) => {
         next(err)
@@ -22,7 +22,7 @@ export const getAllLoyaltyCards = (req: Request, res: Response, next: NextFuncti
 export const patchLoyaltyCard = (req: Request, res: Response, next: NextFunction) => {
     giveLoyaltyStamps(req)
     .then((data: any) => {
-        res.status(200).send({ loyalty_card: data[0] })
+        res.status(200).send({ loyalty_card: data })
     })
     .catch((err: any) => {
         next(err)
