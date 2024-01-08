@@ -57,7 +57,8 @@
                     "description": "This is the shop A",
                     "address": "A Street",
                     "phone_no": "0711111111",
-                    "logo_url": "https://images.pexels.com/photos/158651/news-newsletter-newspaper-information-158651.jpeg?w=700&h=700"
+                    "logo_url": "https://images.pexels.com/photos/158651/news-newsletter-newspaper-information-158651.jpeg?w=700&h=700",
+                    "category": "coffee"
                 }
             ]
         }
@@ -73,7 +74,8 @@
                 "description": "This is the shop B",
                 "address": "B Street",
                 "phone_no": "0722222222",
-                "logo_url": "https://images.pexels.com/photos/158651/news-newsletter-newspaper-information-158651.jpeg?w=700&h=700"
+                "logo_url": "https://images.pexels.com/photos/158651/news-newsletter-newspaper-information-158651.jpeg?w=700&h=700",
+                "category": "bakery"
             }
         }
     },
@@ -114,6 +116,41 @@
                 "created_at": "2024-01-04T15:43:47.508Z"
             }
         }
+    },
+    "POST /api/merchants/:id/programs": {
+        "description": "returns an object showing a newly created loyalty program for this specific merchant",
+        "example url": "/api/merchants/A/programs",
+        "example post": {
+            "name": "this is a new program",
+            "required_points": 400
+        },
+        "example response": {
+            "loyalty_programs": {
+                "id": 5,
+                "merchant_id": "A",
+                "name": "this is a new program",
+                "required_points": 400,
+                "created_at": "2024-01-08T14:56:00.318Z"
+            }
+        }
+    },
+    "GET /api/merchants/:id/programs/:program_id": {
+        "description": "returns an object showing a newly created loyalty program for this specific merchant",
+        "example url": "/api/merchants/A/programs/1",
+        "example response": {
+            "loyalty_programs": {
+                "id": 1,
+                "merchant_id": "A",
+                "name": "this is a new program",
+                "required_points": 400,
+                "created_at": "2024-01-08T14:56:00.318Z"
+            }
+        }
+    },
+    "DELETE /api/merchants/:id/programs/:program_id": {
+        "description": "returns an object showing a newly created loyalty program for this specific merchant",
+        "example url": "/api/merchants/A/programs/1",
+        "example response": {}
     },
     "DELETE /api/:user_id/:loyalty_card_id": {
         "description": "allows a loyalty card to be deleted for a specific user"
