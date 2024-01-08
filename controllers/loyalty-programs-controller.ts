@@ -13,7 +13,7 @@ export const getAllMerchantPrograms = (req: Request, res: Response, next: NextFu
 export const getSpecificMerchantProgram = (req: Request, res: Response, next: NextFunction) => {
     specificMerchantLoyaltyProgram(req)
     .then((data: any) => {
-        res.status(200).send({ loyalty_program: data })
+        res.status(200).send(data[0])
     })
     .catch((err: any) => {
         next(err)

@@ -4,7 +4,7 @@ import { giveLoyaltyStamps, specificLoyaltyCard, allLoyaltyCards } from '../mode
 export const getSpecificLoyaltyCard = (req: Request, res: Response, next: NextFunction) => {
     specificLoyaltyCard(req)
     .then((data: any) => {
-        res.status(200).send({ loyalty_card: data })
+        res.status(200).send(data[0])
     })
     .catch((err: any) => {
         next(err)
