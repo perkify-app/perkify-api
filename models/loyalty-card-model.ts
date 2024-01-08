@@ -3,6 +3,7 @@ import db from "../db/connection";
 export const allLoyaltyCards = (req: any) => {
     let { params } = req
     let { sort_by='points', order='desc', user_id, merchant_id } = req.query
+    if (params.user_id) user_id = params.user_id
     if (sort_by.toLowerCase() !== 'points' && sort_by.toLowerCase() !== 'created_at') sort_by = 'id'
     if (order.toLowerCase() !== 'desc' && order.toLowerCase() !== 'asc') order = 'desc'
     let queryStr = `SELECT * FROM loyalty_cards`
@@ -47,4 +48,13 @@ export const giveLoyaltyStamps = (req: any) => {
     .then((data: any) => {
     return data.rows
 })
+};
+export const postLoyaltyCard = (req: any) => {
+    const { merchant_id, user_id } = req.params
+    return db.query(`
+    INSERT INTO loyalty_cards (loyalty_program_id, user_id)
+    VALUES ($1, $2);`, [merchant_id, user_id])
+    .then((data: any) => {
+        console.log(data)
+    })
 };
