@@ -1,10 +1,10 @@
 import { Request, Response, NextFunction } from 'express';
-import { allMerchants, specificMerchant, addMerchantInfo } from '../models/merchant-model';
+import { allMerchants, addMerchantInfo, specificMerchant } from '../models/merchant-model';
 
 export const getSpecificMerchant = (req: Request, res: Response, next: NextFunction) => {
     specificMerchant(req)
     .then((data: any) => {
-        res.status(200).send({ merchant: data[0] })
+        res.status(200).send({ merchant: data })
     })
     .catch((err: any) => {
         next(err)
@@ -22,7 +22,7 @@ export const getAllMerchants = (req: Request, res: Response, next: NextFunction)
 export const updateMerchant = (req: Request, res: Response, next: NextFunction) => {
     addMerchantInfo(req)
     .then((data: any) => {
-        res.status(200).send({ merchant: data[0] })
+        res.status(200).send({ merchant: data })
     })
     .catch((err: any) => {
         next(err)
