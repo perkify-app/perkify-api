@@ -17,7 +17,10 @@ const allLoyaltyCards = (req) => {
     if (user_id)
         queryStr += ` WHERE loyalty_cards.user_id = '${user_id}'`;
     if (merchant_id || params.id) {
-        if (merchant_id) {
+        if (merchant_id && user_id) {
+            queryStr += ` AND loyalty_programs.merchant_id = '${merchant_id}'`;
+        }
+        if (merchant_id && !user_id) {
             queryStr += ` WHERE loyalty_programs.merchant_id = '${merchant_id}'`;
         }
         if (params.id) {

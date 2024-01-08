@@ -5,9 +5,9 @@
     },
     "GET /api/loyalty_cards": {
         "description": "serves an array of all loyalty cards",
-        "queries": ["user_id", "sort_by", "order"],
+        "queries": ["user_id", "sort_by", "order", "merchant_id"],
         "example url": "/api/loyalty_cards",
-        "example url query": "/api/loyalty_cards?user_id=U2&sort_by=points&order=desc",
+        "example url query": "/api/loyalty_cards?user_id=U2&merchant_id=B&sort_by=points&order=desc",
         "example response (with no query)": {
             "loyalty_cards": [
                 {
