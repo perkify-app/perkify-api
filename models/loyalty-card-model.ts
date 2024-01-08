@@ -34,7 +34,7 @@ export const specificLoyaltyCard = (req: any) => {
         WHERE loyalty_cards.id = $1
         `, [params.loyalty_card_id])
     .then((data: any) => {
-        return data.rows
+        return data.rows[0]
     })
 };
 export const giveLoyaltyStamps = (req: any) => {

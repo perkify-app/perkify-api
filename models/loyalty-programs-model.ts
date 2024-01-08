@@ -17,7 +17,7 @@ export const specificMerchantLoyaltyProgram = (req: any) => {
         WHERE merchant_id = $1 AND id = $2
         `, [params.id, params.program_id])
     .then((data: any) => {
-        return data.rows
+        return data.rows[0]
     })
 };
 export const createLoyaltyPrograms = (req: any) => {

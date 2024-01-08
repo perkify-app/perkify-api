@@ -7,7 +7,7 @@ export const specificUser = (req: any) => {
     WHERE id = $1
     `, [params.user_id])
     .then((data: any) => {
-        return data.rows
+        return data.rows[0]
     })
 };
 export const deleteSpecificUser = (req: any) => {
