@@ -13,7 +13,7 @@ export const specificMerchant = (req: any) => {
         WHERE id = $1
         `, [params.id])
     .then((data: any) => {
-        return data.rows
+        return data.rows[0]
     })
 };
 export const addMerchantInfo = (req: any) => {

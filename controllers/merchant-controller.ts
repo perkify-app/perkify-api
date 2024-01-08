@@ -4,7 +4,7 @@ import { allMerchants, addMerchantInfo, specificMerchant } from '../models/merch
 export const getSpecificMerchant = (req: Request, res: Response, next: NextFunction) => {
     specificMerchant(req)
     .then((data: any) => {
-        res.status(200).send(data[0])
+        res.status(200).send(data)
     })
     .catch((err: any) => {
         next(err)
