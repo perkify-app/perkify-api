@@ -5,7 +5,7 @@ const users_model_1 = require("../models/users-model");
 const getUser = (req, res, next) => {
     (0, users_model_1.specificUser)(req)
         .then((data) => {
-        res.status(200).send({ user: data });
+        res.status(200).send(data);
     })
         .catch((err) => {
         next(err);

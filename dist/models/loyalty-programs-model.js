@@ -23,7 +23,7 @@ const specificMerchantLoyaltyProgram = (req) => {
         WHERE merchant_id = $1 AND id = $2
         `, [params.id, params.program_id])
         .then((data) => {
-        return data.rows;
+        return data.rows[0];
     });
 };
 exports.specificMerchantLoyaltyProgram = specificMerchantLoyaltyProgram;

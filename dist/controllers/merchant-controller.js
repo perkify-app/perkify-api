@@ -5,7 +5,7 @@ const merchant_model_1 = require("../models/merchant-model");
 const getSpecificMerchant = (req, res, next) => {
     (0, merchant_model_1.specificMerchant)(req)
         .then((data) => {
-        res.status(200).send({ merchant: data });
+        res.status(200).send(data);
     })
         .catch((err) => {
         next(err);

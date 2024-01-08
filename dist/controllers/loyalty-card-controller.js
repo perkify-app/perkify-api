@@ -5,7 +5,7 @@ const loyalty_card_model_1 = require("../models/loyalty-card-model");
 const getSpecificLoyaltyCard = (req, res, next) => {
     (0, loyalty_card_model_1.specificLoyaltyCard)(req)
         .then((data) => {
-        res.status(200).send({ loyalty_card: data });
+        res.status(200).send(data);
     })
         .catch((err) => {
         next(err);

@@ -12,7 +12,7 @@ const specificUser = (req) => {
     WHERE id = $1
     `, [params.user_id])
         .then((data) => {
-        return data.rows;
+        return data.rows[0];
     });
 };
 exports.specificUser = specificUser;

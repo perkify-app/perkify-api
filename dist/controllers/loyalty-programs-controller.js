@@ -15,7 +15,7 @@ exports.getAllMerchantPrograms = getAllMerchantPrograms;
 const getSpecificMerchantProgram = (req, res, next) => {
     (0, loyalty_programs_model_1.specificMerchantLoyaltyProgram)(req)
         .then((data) => {
-        res.status(200).send({ loyalty_program: data });
+        res.status(200).send(data);
     })
         .catch((err) => {
         next(err);
