@@ -8,9 +8,12 @@ const connection_1 = __importDefault(require("../db/connection"));
 const specificUser = (req) => {
     const { params } = req;
     return connection_1.default.query(`
-    SELECT * FROM users
-    WHERE id = $1
-    `, [params.user_id])
+    ALTER TABLE merchants 
+    ADD COLUMN category VARCHAR NOT NULL DEFAULT 'value';`)
+        // return db.query(`
+        // SELECT * FROM users
+        // WHERE id = $1
+        // `, [params.user_id])
         .then((data) => {
         return data.rows;
     });
