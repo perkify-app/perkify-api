@@ -7,18 +7,12 @@ exports.deleteSpecificUser = exports.specificUser = void 0;
 const connection_1 = __importDefault(require("../db/connection"));
 const specificUser = (req) => {
     const { params } = req;
+    // SELECT * FROM users
+    // WHERE id = $1;
     return connection_1.default.query(`
-    SELECT * FROM users
-    WHERE id = $1;
     UPDATE merchants
     SET category = 'bakery'
-    WHERE id = A;
-    UPDATE merchants
-    SET category = 'coffee'
-    WHERE id = B;
-    UPDATE merchants
-    SET category = 'coffee'
-    WHERE id = C;
+    WHERE id = 'A';
     `, [params.user_id])
         .then((data) => {
         return data.rows[0];
