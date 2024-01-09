@@ -1,6 +1,6 @@
 import { Router } from 'express';
 const merchantRouter = Router();
-import { changeValues, getAllMerchants, getSpecificMerchant, updateMerchant } from '../controllers/merchant-controller';
+import { getAllMerchants, getSpecificMerchant, updateMerchant } from '../controllers/merchant-controller';
 import { getAllLoyaltyCards } from '../controllers/loyalty-card-controller';
 import { getAllMerchantPrograms, getSpecificMerchantProgram, postLoyaltyProgram } from '../controllers/loyalty-programs-controller';
 import { deleteLoyaltyProgram } from '../controllers/loyalty-programs-controller';
@@ -8,10 +8,6 @@ import { deleteLoyaltyProgram } from '../controllers/loyalty-programs-controller
 merchantRouter
 .route('/')
 .get(getAllMerchants);
-
-merchantRouter
-.route('/change-values')
-.get(changeValues);
 
 merchantRouter
 .route('/:id')
