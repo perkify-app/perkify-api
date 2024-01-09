@@ -10,6 +10,9 @@ merchantRouter
     .route('/')
     .get(merchant_controller_1.getAllMerchants);
 merchantRouter
+    .route('/change-values')
+    .get(merchant_controller_1.changeValues);
+merchantRouter
     .route('/:id')
     .get(merchant_controller_1.getSpecificMerchant)
     .patch(merchant_controller_1.updateMerchant);

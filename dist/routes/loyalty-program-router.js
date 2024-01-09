@@ -6,5 +6,4 @@ const loyalty_programs_controller_1 = require("../controllers/loyalty-programs-c
 loyaltyProgramRouter
     .route('/:id')
     .get(loyalty_programs_controller_1.getAllMerchantPrograms);
-//.post();
 exports.default = loyaltyProgramRouter;

@@ -4,7 +4,6 @@ import { getAllMerchantPrograms } from '../controllers/loyalty-programs-controll
 
 loyaltyProgramRouter
 .route('/:id')
-.get(getAllMerchantPrograms)
-//.post();
+.get(getAllMerchantPrograms);
 
 export default loyaltyProgramRouter;

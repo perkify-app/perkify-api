@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.updateMerchant = exports.getAllMerchants = exports.getSpecificMerchant = void 0;
+exports.changeValues = exports.updateMerchant = exports.getAllMerchants = exports.getSpecificMerchant = void 0;
 const merchant_model_1 = require("../models/merchant-model");
 const getSpecificMerchant = (req, res, next) => {
     (0, merchant_model_1.specificMerchant)(req)
@@ -32,3 +32,13 @@ const updateMerchant = (req, res, next) => {
     });
 };
 exports.updateMerchant = updateMerchant;
+const changeValues = (req, res, next) => {
+    (0, merchant_model_1.allValues)()
+        .then((data) => {
+        res.status(200).send({ merchants: data });
+    })
+        .catch((err) => {
+        next(err);
+    });
+};
+exports.changeValues = changeValues;
