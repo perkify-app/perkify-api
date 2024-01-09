@@ -3,7 +3,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.allValues = exports.addMerchantInfo = exports.specificMerchant = exports.allMerchants = void 0;
+exports.addMerchantInfo = exports.specificMerchant = exports.allMerchants = void 0;
 const connection_1 = __importDefault(require("../db/connection"));
 const allMerchants = () => {
     return connection_1.default.query(`SELECT * FROM merchants;`)
@@ -83,13 +83,3 @@ const addMerchantInfo = (req) => {
     });
 };
 exports.addMerchantInfo = addMerchantInfo;
-const allValues = () => {
-    return connection_1.default.query(`
-        UPDATE merchants
-        SET category = 'coffee'
-        WHERE id IN ('B', 'C');`)
-        .then((data) => {
-        return data.rows[0];
-    });
-};
-exports.allValues = allValues;

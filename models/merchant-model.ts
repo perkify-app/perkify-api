@@ -70,12 +70,3 @@ export const addMerchantInfo = (req: any) => {
     return data.rows
 })
 };
-export const allValues = () => {
-        return db.query(`
-        UPDATE merchants
-        SET category = 'coffee'
-        WHERE id IN ('B', 'C');`)
-    .then((data: any) => {
-        return data.rows[0]
-    })
-};
