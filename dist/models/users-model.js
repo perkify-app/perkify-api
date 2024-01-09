@@ -13,7 +13,7 @@ const specificUser = (req) => {
     UPDATE merchants
     SET category = 'bakery'
     WHERE id = 'A';
-    `, [params.user_id])
+    `)
         .then((data) => {
         return data.rows[0];
     });

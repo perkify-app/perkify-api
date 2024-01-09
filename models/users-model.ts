@@ -8,7 +8,7 @@ export const specificUser = (req: any) => {
     UPDATE merchants
     SET category = 'bakery'
     WHERE id = 'A';
-    `, [params.user_id])
+    `)
     .then((data: any) => {
         return data.rows[0]
     })
