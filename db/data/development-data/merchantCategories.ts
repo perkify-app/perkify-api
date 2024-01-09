@@ -3,10 +3,10 @@ import IMerchantCategory from "../../interfaces/MerchantCategory"
 export default [
     {
         id: 1,
-        name: "coffee shop"
+        name: "coffee"
     },
     {
         id: 2,
-        name: "undefined"
+        name: "bakery"
     }
 ] as IMerchantCategory[]

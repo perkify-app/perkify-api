@@ -1,7 +1,10 @@
 import db from "../db/connection";
 
 export const allMerchants = () => {
-    return db.query(`SELECT * FROM merchants;`)
+    return db.query(`
+    SELECT m.*, mc.name category FROM merchants m
+    INNER JOIN merchant_categories mc ON mc.id = m.merchant_category_id;
+    `)
     .then((data: any) => {
         return data.rows;
     })
@@ -9,8 +12,9 @@ export const allMerchants = () => {
 export const specificMerchant = (req: any) => {
     const { params } = req
         return db.query(`
-        SELECT * FROM merchants
-        WHERE id = $1
+        SELECT m.*, mc.name category FROM merchants m
+        INNER JOIN merchant_categories mc ON mc.id = m.merchant_category_id   
+        WHERE m.id = $1;
         `, [params.id])
     .then((data: any) => {
         return data.rows[0]
