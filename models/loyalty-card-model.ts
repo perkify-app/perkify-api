@@ -2,15 +2,17 @@ import db from "../db/connection";
 
 export const allLoyaltyCards = (req: any) => {
     let { params } = req
-    let { sort_by='points', order='desc', user_id, merchant_id } = req.query
+    let { sort_by='points', order='desc', user_id, merchant_id, id } = req.query
     if (params.user_id) user_id = params.user_id
     if (sort_by.toLowerCase() !== 'points' && sort_by.toLowerCase() !== 'created_at') sort_by = 'id'
     if (order.toLowerCase() !== 'desc' && order.toLowerCase() !== 'asc') order = 'desc'
     let queryStr = `SELECT * FROM loyalty_cards`
     queryStr += ` JOIN loyalty_programs ON loyalty_cards.loyalty_program_id = loyalty_programs.id`
-    if (user_id) queryStr += ` WHERE loyalty_cards.user_id = '${user_id}'`
+    if (id) queryStr += ` WHERE loyalty_cards.id = '${id}'`
+    if (user_id && !id) queryStr += ` WHERE loyalty_cards.user_id = '${user_id}'`
+    if (user_id && id) queryStr += ` AND loyalty_cards.user_id = '${user_id}'`
     if (merchant_id || params.id) {
-        if (merchant_id && user_id) {
+        if (merchant_id && user_id || merchant_id && id) {
             queryStr += ` AND loyalty_programs.merchant_id = '${merchant_id}'`
         }
         if (merchant_id && !user_id) {
@@ -20,7 +22,7 @@ export const allLoyaltyCards = (req: any) => {
             queryStr += ` WHERE loyalty_programs.merchant_id = '${params.id}'`
         }
     }
-    queryStr += ` ORDER BY ${sort_by} ${order}`
+    queryStr += ` ORDER BY loyalty_cards.${sort_by} ${order}`
     return db.query(queryStr)
     .then((data: any) => {
         return data.rows;
@@ -50,11 +52,20 @@ export const giveLoyaltyStamps = (req: any) => {
 })
 };
 export const postLoyaltyCard = (req: any) => {
-    const { merchant_id, user_id } = req.params
-    return db.query(`
-    INSERT INTO loyalty_cards (loyalty_program_id, user_id)
-    VALUES ($1, $2);`, [merchant_id, user_id])
+    const { loyalty_program_id, user_id } = req.params
+    return db.query(`SELECT * FROM loyalty_cards WHERE loyalty_program_id = $1 AND user_id = $2`, [loyalty_program_id, user_id])
     .then((data: any) => {
-        console.log(data)
+        if (!data.rows.length) {
+            return db.query(`INSERT INTO loyalty_cards (loyalty_program_id, user_id)
+            VALUES ($1, $2)
+            RETURNING *`, [loyalty_program_id, user_id])
+        }
+    })
+    .then((data:any) => {
+        if (data) { 
+            return data.rows 
+        } else {
+            throw {status: 400, msg: 'BAD REQUEST: Card Already Exists'}
+        }
     })
 };
