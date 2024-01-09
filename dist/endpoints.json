@@ -5,9 +5,9 @@
     },
     "GET /api/loyalty_cards": {
         "description": "serves an array of all loyalty cards",
-        "queries": ["user_id", "sort_by", "order", "merchant_id"],
+        "queries": ["user_id", "sort_by", "order", "merchant_id", "id (loyalty_cards.id)"],
         "example url": "/api/loyalty_cards",
-        "example url query": "/api/loyalty_cards?user_id=U2&merchant_id=B&sort_by=points&order=desc",
+        "example url query": "/api/loyalty_cards?user_id=U2&merchant_id=B&&id=2&sort_by=points&order=desc",
         "example response (with no query)": {
             "loyalty_cards": [
                 {
@@ -167,6 +167,20 @@
     },
     "DELETE /api/users/:user_id": {
         "description": "allows a specific user to be deleted"
+    },
+    "POST /api/users/:user_id/loyalty_cards/:loyalty_program_id": {
+        "description": "allows a new card to be created for a user",
+        "example url": "/api/users/U2/loyalty_cards/1",
+        "example response": {
+            "id": 2,
+            "loyalty_program_id": 1,
+            "user_id": "U2",
+            "points": 1,
+            "created_at": "2024-01-04T15:43:47.508Z",
+            "merchant_id": "B",
+            "name": "programShopB",
+            "required_points": 5
+        }
     },
     "GET /api/loyalty_programs/:merchant_id": {
         "description": "serves an object containing the loyalty programs with that specific id",
