@@ -5,7 +5,7 @@ const usersRouter = (0, express_1.Router)();
 const users_controller_1 = require("../controllers/users-controller");
 const loyalty_card_controller_1 = require("../controllers/loyalty-card-controller");
 usersRouter
-    .route('/:user_id/change-values')
+    .route('/:user_id')
     .get(users_controller_1.getUser)
     .delete(users_controller_1.deleteUser);
 usersRouter

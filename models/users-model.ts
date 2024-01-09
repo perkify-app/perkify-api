@@ -2,13 +2,10 @@ import db from "../db/connection";
 
 export const specificUser = (req: any) => {
     const { params } = req
-    // SELECT * FROM users
-    // WHERE id = $1;
     return db.query(`
-    UPDATE merchants
-    SET category = 'bakery'
-    WHERE id = 'A';
-    `)
+    SELECT * FROM users
+    WHERE id = $1;
+    `, [params.user_id])
     .then((data: any) => {
         return data.rows[0]
     })

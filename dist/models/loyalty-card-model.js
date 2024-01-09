@@ -49,7 +49,6 @@ const specificLoyaltyCard = (req) => {
         WHERE loyalty_cards.id = $1
         `, [params.loyalty_card_id])
         .then((data) => {
-        console.log(data);
         return data.rows[0];
     });
 };

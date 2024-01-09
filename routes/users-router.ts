@@ -4,7 +4,7 @@ import { getUser, deleteUser } from '../controllers/users-controller';
 import { getAllLoyaltyCards, newLoyaltyCard } from '../controllers/loyalty-card-controller';
 
 usersRouter
-.route('/:user_id/change-values')
+.route('/:user_id')
 .get(getUser)
 .delete(deleteUser);
 
