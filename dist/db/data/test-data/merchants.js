@@ -3,7 +3,6 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.default = [
     {
         id: "A",
-        user_id: "M1",
         company_name: "shopA",
         description: "This is the shop A",
         address: "A Street",
@@ -12,7 +11,6 @@ exports.default = [
     },
     {
         id: "B",
-        user_id: "M2",
         company_name: "shopB",
         description: "This is the shop B",
         address: "B Street",
@@ -21,7 +19,6 @@ exports.default = [
     },
     {
         id: "C",
-        user_id: "M3",
         company_name: "shopC",
         description: "This is the shop C",
         address: "C Street",

@@ -6,7 +6,10 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.addMerchantInfo = exports.specificMerchant = exports.allMerchants = void 0;
 const connection_1 = __importDefault(require("../db/connection"));
 const allMerchants = () => {
-    return connection_1.default.query(`SELECT * FROM merchants;`)
+    return connection_1.default.query(`
+    SELECT m.*, mc.name category FROM merchants m
+    INNER JOIN merchant_categories mc ON mc.id = m.merchant_category_id;
+    `)
         .then((data) => {
         return data.rows;
     });
@@ -15,8 +18,9 @@ exports.allMerchants = allMerchants;
 const specificMerchant = (req) => {
     const { params } = req;
     return connection_1.default.query(`
-        SELECT * FROM merchants
-        WHERE id = $1
+        SELECT m.*, mc.name category FROM merchants m
+        INNER JOIN merchant_categories mc ON mc.id = m.merchant_category_id   
+        WHERE m.id = $1;
         `, [params.id])
         .then((data) => {
         return data.rows[0];

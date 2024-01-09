@@ -14,28 +14,36 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const pg_format_1 = __importDefault(require("pg-format"));
 const connection_1 = __importDefault(require("../connection"));
-function seed({ loyaltyPrograms, loyaltyCards, users, merchants }) {
+function seed({ merchantCategories, loyaltyPrograms, loyaltyCards, users, merchants }) {
     return __awaiter(this, void 0, void 0, function* () {
         //Delete
         yield connection_1.default.query(`DROP TABLE IF EXISTS loyalty_cards;`);
         yield connection_1.default.query(`DROP TABLE IF EXISTS loyalty_programs;`);
-        yield connection_1.default.query(`DROP TABLE IF EXISTS merchants;`);
         yield connection_1.default.query(`DROP TABLE IF EXISTS users;`);
+        yield connection_1.default.query(`DROP TABLE IF EXISTS merchants;`);
+        yield connection_1.default.query(`DROP TABLE IF EXISTS merchant_categories;`);
         //Create
         yield connection_1.default.query(`
-    CREATE TABLE users (
-        id VARCHAR PRIMARY KEY,
-        name VARCHAR NOT NULL        
+      CREATE TABLE merchant_categories (
+        id SERIAL PRIMARY KEY,        
+        name VARCHAR NOT NULL
       );`);
         yield connection_1.default.query(`
       CREATE TABLE merchants (
-        id VARCHAR PRIMARY KEY,
-        user_id VARCHAR REFERENCES users(id) ON DELETE SET NULL,
+        id VARCHAR PRIMARY KEY,        
         company_name VARCHAR NOT NULL,
         description TEXT NOT NULL,
         address VARCHAR NOT NULL,
-        phone_no VARCHAR NOT NULL,
+        lat_long VARCHAR,
+        phone_no VARCHAR,
+        merchant_category_id INTEGER REFERENCES merchant_categories(id) ON DELETE SET NULL,
         logo_url VARCHAR DEFAULT 'https://images.pexels.com/photos/97050/pexels-photo-97050.jpeg?w=700&h=700'
+      );`);
+        yield connection_1.default.query(`
+    CREATE TABLE users (
+        id VARCHAR PRIMARY KEY,
+        name VARCHAR NOT NULL,
+        merchant_id VARCHAR REFERENCES merchants(id) ON DELETE SET NULL
       );`);
         yield connection_1.default.query(`
       CREATE TABLE loyalty_programs (
@@ -53,15 +61,19 @@ function seed({ loyaltyPrograms, loyaltyCards, users, merchants }) {
         points INTEGER NOT NULL DEFAULT 0,
         created_at TIMESTAMP DEFAULT NOW()
       );`);
-        //Seed  
-        const insertUsersQueryStr = (0, pg_format_1.default)('INSERT INTO users ( id, name ) VALUES %L;', users.map(({ id, name }) => [id, name]));
-        const insertMerchantsQueryStr = (0, pg_format_1.default)('INSERT INTO merchants ( id, user_id, company_name, description, address, phone_no, logo_url ) VALUES %L;', merchants.map(({ id, user_id, company_name, description, address, phone_no, logo_url }) => {
-            return [id, user_id, company_name, description, address, phone_no, logo_url];
+        yield connection_1.default.query(`
+        ALTER TABLE loyalty_cards ADD CONSTRAINT unq_loyalty_cards UNIQUE ( loyalty_program_id, user_id )`);
+        //Seed
+        const insertMerchantCategoriesQueryStr = (0, pg_format_1.default)('INSERT INTO merchant_categories ( id, name ) VALUES %L;', merchantCategories.map(({ id, name }) => [id, name]));
+        const insertUsersQueryStr = (0, pg_format_1.default)('INSERT INTO users ( id, name, merchant_id ) VALUES %L;', users.map(({ id, name, merchant_id }) => [id, name, merchant_id]));
+        const insertMerchantsQueryStr = (0, pg_format_1.default)('INSERT INTO merchants ( id, merchant_category_id, company_name, description, address, phone_no, logo_url, lat_long ) VALUES %L;', merchants.map(({ id, merchant_category_id, company_name, description, address, phone_no, logo_url, lat_long }) => {
+            return [id, merchant_category_id, company_name, description, address, phone_no, logo_url, lat_long];
         }));
         const insertLoyaltyProgramsQueryStr = (0, pg_format_1.default)('INSERT INTO loyalty_programs (merchant_id, name, required_points) VALUES %L;', loyaltyPrograms.map(({ merchant_id, name, required_points }) => [merchant_id, name, required_points]));
         const insertLoyaltyCardsQueryStr = (0, pg_format_1.default)('INSERT INTO loyalty_cards (loyalty_program_id, user_id, points) VALUES %L;', loyaltyCards.map(({ loyalty_program_id, user_id, points }) => [loyalty_program_id, user_id, points]));
-        yield connection_1.default.query(insertUsersQueryStr);
+        yield connection_1.default.query(insertMerchantCategoriesQueryStr);
         yield connection_1.default.query(insertMerchantsQueryStr);
+        yield connection_1.default.query(insertUsersQueryStr);
         yield connection_1.default.query(insertLoyaltyProgramsQueryStr);
         yield connection_1.default.query(insertLoyaltyCardsQueryStr);
     });

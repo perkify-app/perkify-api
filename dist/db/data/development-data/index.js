@@ -7,4 +7,5 @@ const users_1 = __importDefault(require("./users"));
 const merchants_1 = __importDefault(require("./merchants"));
 const loyaltyPrograms_1 = __importDefault(require("./loyaltyPrograms"));
 const loyaltyCards_1 = __importDefault(require("./loyaltyCards"));
-exports.default = { users: users_1.default, merchants: merchants_1.default, loyaltyPrograms: loyaltyPrograms_1.default, loyaltyCards: loyaltyCards_1.default };
+const merchantCategories_1 = __importDefault(require("./merchantCategories"));
+exports.default = { users: users_1.default, merchants: merchants_1.default, loyaltyPrograms: loyaltyPrograms_1.default, loyaltyCards: loyaltyCards_1.default, merchantCategories: merchantCategories_1.default };

@@ -16,13 +16,16 @@ exports.default = [
     {
         id: 'U1',
         name: 'jonny',
+        merchant_id: "A"
     },
     {
         id: 'U2',
         name: 'sam',
+        merchant_id: "B"
     },
     {
         id: 'U3',
         name: 'paul',
+        merchant_id: "C"
     }
 ];
