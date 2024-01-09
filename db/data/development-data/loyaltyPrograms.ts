@@ -1,28 +1,109 @@
 import ILoyaltyProgram from "../../interfaces/LoyaltyProgram";
 
+function getRandomPoints() {
+    const allowedPoints = [6, 8, 9, 10];
+    return allowedPoints[Math.floor(Math.random() * allowedPoints.length)];
+}
+
 export default [
-  {
-    merchant_id: "A",
-    name: "programShopA",
-    required_points: 6,
-    created_at: new Date(1594329060000),
-    article_img_url:
-      "https://images.pexels.com/photos/158651/news-newsletter-newspaper-information-158651.jpeg?w=700&h=700",
-  },
-  {
-    merchant_id: "B",
-    name: "programShopB",
-    required_points: 5,
-    created_at: new Date(1602828180000),
-    article_img_url:
-      "https://images.pexels.com/photos/158651/news-newsletter-newspaper-information-158651.jpeg?w=700&h=700",
-  },
-  {
-    merchant_id: "C",
-    name: "programShopC",
-    required_points: 4,
-    created_at: new Date(1604394720000),
-    article_img_url:
-      "https://images.pexels.com/photos/158651/news-newsletter-newspaper-information-158651.jpeg?w=700&h=700",
-  }
+    {
+        merchant_id: "M1",
+        name: "Coffee Card",
+        required_points: getRandomPoints()
+    },
+    {
+        merchant_id: "M2",
+        name: "Coffee Card",
+        required_points: getRandomPoints()
+    },
+    {
+        merchant_id: "M3",
+        name: "Coffee Card",
+        required_points: getRandomPoints()
+    },
+    {
+        merchant_id: "M4",
+        name: "Coffee Card",
+        required_points: getRandomPoints()
+    },
+    {
+        merchant_id: "M5",
+        name: "Coffee Card",
+        required_points: getRandomPoints()
+    },
+    {
+        merchant_id: "M6",
+        name: "Coffee Card",
+        required_points: getRandomPoints()
+    },
+    {
+        merchant_id: "M7",
+        name: "Coffee Card",
+        required_points: getRandomPoints()
+    },
+    {
+        merchant_id: "M8",
+        name: "Coffee Card",
+        required_points: getRandomPoints()
+    },
+    {
+        merchant_id: "M9",
+        name: "Coffee Card",
+        required_points: getRandomPoints()
+    },
+    {
+        merchant_id: "M10",
+        name: "Coffee Card",
+        required_points: getRandomPoints()
+    },
+    {
+        merchant_id: "M11",
+        name: "Coffee Card",
+        required_points: getRandomPoints()
+    },
+    {
+        merchant_id: "M12",
+        name: "Coffee Card",
+        required_points: getRandomPoints()
+    },
+    {
+        merchant_id: "M13",
+        name: "Coffee Card",
+        required_points: getRandomPoints()
+    },
+    {
+        merchant_id: "M14",
+        name: "Coffee Card",
+        required_points: getRandomPoints()
+    },
+    {
+        merchant_id: "M15",
+        name: "Coffee Card",
+        required_points: getRandomPoints()
+    },
+    {
+        merchant_id: "M16",
+        name: "Coffee Card",
+        required_points: getRandomPoints()
+    },
+    {
+        merchant_id: "M17",
+        name: "Coffee Card",
+        required_points: getRandomPoints()
+    },
+    {
+        merchant_id: "M18",
+        name: "Coffee Card",
+        required_points: getRandomPoints()
+    },
+    {
+        merchant_id: "M19",
+        name: "Coffee Card",
+        required_points: getRandomPoints()
+    },
+    {
+        merchant_id: "M20",
+        name: "Coffee Card",
+        required_points: getRandomPoints()
+    }
 ] as ILoyaltyProgram[];
