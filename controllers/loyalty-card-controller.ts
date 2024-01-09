@@ -34,6 +34,6 @@ export const newLoyaltyCard = (req: Request, res: Response, next: NextFunction) 
         res.status(201).send(data)
     })
     .catch((err: any) => {
-        next(err)
+        return res.status(400).send(err.msg)
     })
 };
