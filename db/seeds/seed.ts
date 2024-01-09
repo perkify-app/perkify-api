@@ -72,9 +72,9 @@ export default async function seed({ merchantCategories, loyaltyPrograms, loyalt
         users.map(({ id, name, merchant_id }) => [id, name, merchant_id])
     );
     const insertMerchantsQueryStr = format(
-        'INSERT INTO merchants ( id, company_name, description, address, phone_no, logo_url ) VALUES %L;',
-        merchants.map(({ id, company_name, description, address, phone_no, logo_url }) => {
-            return [id, company_name, description, address, phone_no, logo_url];
+        'INSERT INTO merchants ( id, merchant_category_id, company_name, description, address, phone_no, logo_url ) VALUES %L;',
+        merchants.map(({ id, merchant_category_id, company_name, description, address, phone_no, logo_url }) => {
+            return [id, merchant_category_id, company_name, description, address, phone_no, logo_url];
         })
     );
     const insertLoyaltyProgramsQueryStr = format(
