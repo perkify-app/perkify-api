@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.patchLoyaltyCard = exports.getAllLoyaltyCards = exports.getSpecificLoyaltyCard = void 0;
+exports.newLoyaltyCard = exports.patchLoyaltyCard = exports.getAllLoyaltyCards = exports.getSpecificLoyaltyCard = void 0;
 const loyalty_card_model_1 = require("../models/loyalty-card-model");
 const getSpecificLoyaltyCard = (req, res, next) => {
     (0, loyalty_card_model_1.specificLoyaltyCard)(req)
@@ -32,3 +32,13 @@ const patchLoyaltyCard = (req, res, next) => {
     });
 };
 exports.patchLoyaltyCard = patchLoyaltyCard;
+const newLoyaltyCard = (req, res, next) => {
+    (0, loyalty_card_model_1.postLoyaltyCard)(req)
+        .then((data) => {
+        res.status(201).send(data);
+    })
+        .catch((err) => {
+        return res.status(400).send(err.msg);
+    });
+};
+exports.newLoyaltyCard = newLoyaltyCard;
