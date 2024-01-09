@@ -28,6 +28,7 @@ export default async function seed({ merchantCategories, loyaltyPrograms, loyalt
         company_name VARCHAR NOT NULL,
         description TEXT NOT NULL,
         address VARCHAR NOT NULL,
+        lat_long VARCHAR,
         phone_no VARCHAR,
         merchant_category_id INTEGER REFERENCES merchant_categories(id) ON DELETE SET NULL,
         logo_url VARCHAR DEFAULT 'https://images.pexels.com/photos/97050/pexels-photo-97050.jpeg?w=700&h=700'
@@ -72,9 +73,9 @@ export default async function seed({ merchantCategories, loyaltyPrograms, loyalt
         users.map(({ id, name, merchant_id }) => [id, name, merchant_id])
     );
     const insertMerchantsQueryStr = format(
-        'INSERT INTO merchants ( id, merchant_category_id, company_name, description, address, phone_no, logo_url ) VALUES %L;',
-        merchants.map(({ id, merchant_category_id, company_name, description, address, phone_no, logo_url }) => {
-            return [id, merchant_category_id, company_name, description, address, phone_no, logo_url];
+        'INSERT INTO merchants ( id, merchant_category_id, company_name, description, address, phone_no, logo_url, lat_long ) VALUES %L;',
+        merchants.map(({ id, merchant_category_id, company_name, description, address, phone_no, logo_url, lat_long }) => {
+            return [id, merchant_category_id, company_name, description, address, phone_no, logo_url, lat_long];
         })
     );
     const insertLoyaltyProgramsQueryStr = format(

@@ -3,7 +3,6 @@ import IMerchant from "../../interfaces/Merchant";
 export default [
   {
     id: "A",
-    user_id: "M1",
     company_name: "shopA",
     description: "This is the shop A",
     address: "A Street",
@@ -13,7 +12,6 @@ export default [
   },
   {
     id: "B",
-    user_id: "M2",
     company_name: "shopB",
     description: "This is the shop B",
     address: "B Street",
@@ -23,7 +21,6 @@ export default [
   },
   {
     id: "C",
-    user_id: "M3",
     company_name: "shopC",
     description: "This is the shop C",
     address: "C Street",

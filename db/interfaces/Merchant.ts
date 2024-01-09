@@ -6,4 +6,5 @@ export default interface IMerchant {
     phone_no?: string;
     logo_url?: string;
     merchant_category_id?: number;
+    lat_long?: string;
 }
