@@ -74,6 +74,15 @@ const addMerchantInfo = (req) => {
                 queryStr += ` phone_no = $${queryValues.length}`;
             }
         }
+        if (body.category) {
+            queryValues.push(body.category);
+            if (queryValues.length > 1) {
+                queryStr += `, category = $${queryValues.length}`;
+            }
+            else {
+                queryStr += ` category = $${queryValues.length}`;
+            }
+        }
     }
     queryValues.push(params.id);
     queryStr += ` WHERE id = $${queryValues.length}`;
