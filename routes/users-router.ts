@@ -11,6 +11,9 @@ usersRouter
 usersRouter
 .route('/:user_id/loyalty_cards')
 .get(getAllLoyaltyCards)
+
+usersRouter
+.route('/:user_id/loyalty_cards/:loyalty_program_id')
 .post(newLoyaltyCard);
 
 export default usersRouter;
