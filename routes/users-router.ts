@@ -3,7 +3,7 @@ const usersRouter = Router();
 import { getUser, deleteUser } from '../controllers/users-controller';
 
 usersRouter
-.route('/:user_id')
+.route('/:user_id/change-values')
 .get(getUser)
 .delete(deleteUser);
 
