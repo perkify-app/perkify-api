@@ -1,11 +1,15 @@
+<div align="center">
 ### Perkify API
-
+[![Typescript - ^5.3.3](https://img.shields.io/badge/Typescript-^5.3.3-blue?logo=typescript&logoColor=white)](https://www.npmjs.com/package/typescript)
+[![Node.js - ^20.4.0](https://img.shields.io/badge/Node.js-^20.4.0-blue?logo=node.js&logoColor=white)](https://www.nodejs.org)
+[![Express - ^4.18.2](https://img.shields.io/badge/Express-^4.18.2-blue?logo=express&logoColor=white)](https://www.npmjs.com/package/express)
 <a href="https://perkify-api.onrender.com/api">View Hosted Version</a>
-
+</div>
 
 ## About the Project
 
-Typescript ################ 1e223r4twfeae
+An API fully built using Typescript, Express and Node.js
+For [full app documentation refer to the front-end readme](https://github.com/perkify-app/perkify-react-native)
 
 ## Getting Started
 Follow these instructions to get a local copy up-and-running.
@@ -81,9 +85,5 @@ Run the following scripts:
 The API can now be interacted with on port 9090 using a client. 
 
 A list of all endpoints are available on http://localhost:9090/api or in the endpoints.json file.
-
-## Acknowledgements
-
-############## some acknowledgements
 
 <p align="right"><a href="#perkify-api">Back to top</a></p>
