@@ -70,8 +70,8 @@ const postLoyaltyCard = (req) => {
     return connection_1.default.query(`SELECT * FROM loyalty_cards WHERE loyalty_program_id = $1 AND user_id = $2`, [loyalty_program_id, user_id])
         .then((data) => {
         if (!data.rows.length) {
-            return connection_1.default.query(`INSERT INTO loyalty_cards (loyalty_program_id, user_id)
-            VALUES ($1, $2)
+            return connection_1.default.query(`INSERT INTO loyalty_cards (loyalty_program_id, user_id, created_at)
+            VALUES ($1, $2, DEFAULT)
             RETURNING *`, [loyalty_program_id, user_id]);
         }
     })
