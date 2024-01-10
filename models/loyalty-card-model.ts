@@ -4,10 +4,13 @@ export const allLoyaltyCards = (req: any) => {
     let { params } = req
     let { sort_by = 'points', order = 'desc', user_id, merchant_id, id } = req.query
     if (params.user_id) user_id = params.user_id
-    if (sort_by.toLowerCase() !== 'points' && sort_by.toLowerCase() !== 'created_at') sort_by = 'id'
+    if (sort_by.toLowerCase() !== 'points' && sort_by.toLowerCase() !== 'created_at') sort_by = 'lc.id'
+
+    if (sort_by === "points") sort_by = "remaining_points";    //TODO - To be changed
+
     if (order.toLowerCase() !== 'desc' && order.toLowerCase() !== 'asc') order = 'desc'
     let queryStr = `
-    SELECT lc.*, lp.required_points, lp.name, m.company_name
+    SELECT lc.*, lp.required_points, lp.name, m.company_name, (lp.required_points - lc.points) remaining_points
     FROM loyalty_cards lc
     JOIN loyalty_programs lp ON lc.loyalty_program_id = lp.id    
     JOIN merchants m ON lp.merchant_id = m.id`
@@ -25,7 +28,7 @@ export const allLoyaltyCards = (req: any) => {
             queryStr += ` WHERE lp.merchant_id = '${params.id}'`
         }
     }
-    queryStr += ` ORDER BY lc.${sort_by} ${order}`
+    queryStr += ` ORDER BY ${sort_by} ${order}`
     return db.query(queryStr)
         .then((data: any) => {
             return data.rows;

@@ -11,11 +11,13 @@ const allLoyaltyCards = (req) => {
     if (params.user_id)
         user_id = params.user_id;
     if (sort_by.toLowerCase() !== 'points' && sort_by.toLowerCase() !== 'created_at')
-        sort_by = 'id';
+        sort_by = 'lc.id';
+    if (sort_by === "points")
+        sort_by = "remaining_points"; //TODO - To be changed
     if (order.toLowerCase() !== 'desc' && order.toLowerCase() !== 'asc')
         order = 'desc';
     let queryStr = `
-    SELECT lc.*, lp.required_points, lp.name, m.company_name
+    SELECT lc.*, lp.required_points, lp.name, m.company_name, (lp.required_points - lc.points) remaining_points
     FROM loyalty_cards lc
     JOIN loyalty_programs lp ON lc.loyalty_program_id = lp.id    
     JOIN merchants m ON lp.merchant_id = m.id`;
@@ -36,7 +38,7 @@ const allLoyaltyCards = (req) => {
             queryStr += ` WHERE lp.merchant_id = '${params.id}'`;
         }
     }
-    queryStr += ` ORDER BY lc.${sort_by} ${order}`;
+    queryStr += ` ORDER BY ${sort_by} ${order}`;
     return connection_1.default.query(queryStr)
         .then((data) => {
         return data.rows;
