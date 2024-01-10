@@ -1,6 +1,15 @@
 import { Request, Response, NextFunction } from 'express';
-import { createLoyaltyPrograms, deleteMerchantLoyaltyProgram, merchantLoyaltyPrograms, specificMerchantLoyaltyProgram } from '../models/loyalty-programs-model';
+import { allLoyaltyPrograms, createLoyaltyPrograms, deleteMerchantLoyaltyProgram, merchantLoyaltyPrograms, specificMerchantLoyaltyProgram } from '../models/loyalty-programs-model';
 
+export const getAllPrograms = (req: Request, res: Response, next: NextFunction) => {
+    allLoyaltyPrograms()
+    .then((data: any) => {
+        res.status(200).send({ loyalty_programs: data })
+    })
+    .catch((err: any) => {
+        next(err)
+    })
+};
 export const getAllMerchantPrograms = (req: Request, res: Response, next: NextFunction) => {
     merchantLoyaltyPrograms(req)
     .then((data: any) => {
