@@ -1,9 +1,19 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.deleteCard = void 0;
+exports.removeLoyaltyCard = exports.resetPoints = void 0;
 const redeem_model_1 = require("../models/redeem-model");
-const deleteCard = (req, res, next) => {
+const resetPoints = (req, res, next) => {
     (0, redeem_model_1.redeemLoyaltyCard)(req)
+        .then((data) => {
+        res.status(200).send('Points Reset');
+    })
+        .catch((err) => {
+        next(err);
+    });
+};
+exports.resetPoints = resetPoints;
+const removeLoyaltyCard = (req, res, next) => {
+    (0, redeem_model_1.deleteLoyaltyCard)(req)
         .then((data) => {
         res.status(204).send(data);
     })
@@ -11,4 +21,4 @@ const deleteCard = (req, res, next) => {
         next(err);
     });
 };
-exports.deleteCard = deleteCard;
+exports.removeLoyaltyCard = removeLoyaltyCard;
