@@ -158,11 +158,11 @@
         "example url": "/api/merchants/M1/programs/1",
         "example response": {}
     },
-    "DELETE /api/redeem/:user_id/:loyalty_card_id": {
-        "description": "allows a loyalty card to be deleted for a specific user"
+    "DELETE /api/loyalty_cards/:loyalty_card_id": {
+        "description": "deletes an specific loyalty card"
     },
-    "PATCH /api/redeem/:user_id/:loyalty_card_id": {
-        "description": "PATCH requests should be made with no body. When a patch request is made to this endpoint, if points & required_points are the same value: points will be reset to 0.",
+    "GET /api/loyalty_cards/:loyalty_card_id/redeem": {
+        "description": "Custom endpoint - When a get request is made to this endpoint, if points & required_points are the same value: points will be reset to 0.",
         "example response": "Points Reset"
     },
     "GET /api/users/:user_id": {

@@ -34,6 +34,7 @@ export const allLoyaltyCards = (req: any) => {
             return data.rows;
         })
 };
+
 export const specificLoyaltyCard = (req: any) => {
     const { params } = req
     return db.query(`
@@ -47,6 +48,7 @@ export const specificLoyaltyCard = (req: any) => {
             return data.rows[0]
         })
 };
+
 export const giveLoyaltyStamps = (req: any) => {
     const { body, params } = req
     return db.query(`
@@ -58,7 +60,8 @@ export const giveLoyaltyStamps = (req: any) => {
             return data.rows
         })
 };
-export const postLoyaltyCard = (req: any) => {
+
+export const createLoyaltyCard = (req: any) => {
     const { user_id } = req.params;
     const { loyalty_program_id } = req.body;
     return db.query(`SELECT * FROM loyalty_cards WHERE loyalty_program_id = $1 AND user_id = $2`, [loyalty_program_id, user_id])
@@ -74,6 +77,28 @@ export const postLoyaltyCard = (req: any) => {
                 return data.rows[0]
             } else {
                 throw { status: 400, msg: 'BAD REQUEST: Card Already Exists' }
+            }
+        })
+};
+
+export const removeLoyaltyCard = (req: any) => {
+    const { params } = req
+    return db.query(`
+        DELETE FROM loyalty_cards WHERE id = $1;`, [params.loyalty_card_id])
+};
+
+export const redeemLoyaltyCard = (req: any) => {
+    const { params } = req
+    return db.query(`
+        UPDATE loyalty_cards lc
+        SET points = 0
+        FROM loyalty_programs lp
+        WHERE lc.id = $1
+        AND lc.points = lp.required_points
+        AND lc.loyalty_program_id = lp.id;`, [params.loyalty_card_id])
+        .then((data) => {
+            if (!data.rowCount) {
+                throw new Error
             }
         })
 };

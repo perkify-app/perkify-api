@@ -1,5 +1,5 @@
 import { Request, Response, NextFunction } from 'express';
-import { giveLoyaltyStamps, specificLoyaltyCard, allLoyaltyCards, postLoyaltyCard } from '../models/loyalty-card-model';
+import { giveLoyaltyStamps, specificLoyaltyCard, allLoyaltyCards, createLoyaltyCard, removeLoyaltyCard, redeemLoyaltyCard } from '../models/loyalty-card-model';
 
 export const getSpecificLoyaltyCard = (req: Request, res: Response, next: NextFunction) => {
     specificLoyaltyCard(req)
@@ -28,12 +28,33 @@ export const patchLoyaltyCard = (req: Request, res: Response, next: NextFunction
         next(err)
     })
 };
-export const newLoyaltyCard = (req: Request, res: Response, next: NextFunction) => {
-    postLoyaltyCard(req)
+export const postLoyaltyCard = (req: Request, res: Response, next: NextFunction) => {
+    createLoyaltyCard(req)
     .then((data: any) => {
         res.status(201).send(data)
     })
     .catch((err: any) => {
         return res.status(400).send(err.msg)
+    })
+};
+
+export const deleteLoyaltyCard = (req: Request, res: Response, next: NextFunction) => {
+    removeLoyaltyCard(req)
+    .then((data: any) => {
+        res.status(204).send(data)
+    })
+    .catch((err: any) => {
+        next(err)
+    })
+};
+
+
+export const resetPoints = (req: Request, res: Response, next: NextFunction) => {
+    redeemLoyaltyCard(req)
+    .then((data: any) => {
+        res.status(200).send('Points Reset')
+    })
+    .catch((err: any) => {
+        next(err)
     })
 };
