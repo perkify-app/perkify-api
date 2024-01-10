@@ -57,7 +57,7 @@ export const postLoyaltyCard = (req: any) => {
     .then((data: any) => {
         if (!data.rows.length) {
             return db.query(`INSERT INTO loyalty_cards (loyalty_program_id, user_id, created_at)
-            VALUES ($1, $2, DEFAULT)
+            VALUES ($1, $2, NOW())
             RETURNING *`, [loyalty_program_id, user_id])
         }
     })
