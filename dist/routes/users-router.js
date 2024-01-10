@@ -10,8 +10,6 @@ usersRouter
     .delete(users_controller_1.deleteUser);
 usersRouter
     .route('/:user_id/loyalty_cards')
-    .get(loyalty_card_controller_1.getAllLoyaltyCards);
-usersRouter
-    .route('/:user_id/loyalty_cards/:loyalty_program_id')
+    .get(loyalty_card_controller_1.getAllLoyaltyCards)
     .post(loyalty_card_controller_1.newLoyaltyCard);
 exports.default = usersRouter;

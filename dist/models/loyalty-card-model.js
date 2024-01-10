@@ -15,9 +15,10 @@ const allLoyaltyCards = (req) => {
     if (order.toLowerCase() !== 'desc' && order.toLowerCase() !== 'asc')
         order = 'desc';
     let queryStr = `
-    SELECT lc.*, lp.required_points, lp.name
+    SELECT lc.*, lp.required_points, lp.name, m.company_name
     FROM loyalty_cards lc
-    JOIN loyalty_programs lp ON lc.loyalty_program_id = lp.id`;
+    JOIN loyalty_programs lp ON lc.loyalty_program_id = lp.id    
+    JOIN merchants m ON lp.merchant_id = m.id`;
     if (id)
         queryStr += ` WHERE lc.id = '${id}'`;
     if (user_id && !id)
@@ -45,9 +46,10 @@ exports.allLoyaltyCards = allLoyaltyCards;
 const specificLoyaltyCard = (req) => {
     const { params } = req;
     return connection_1.default.query(`
-        SELECT lc.*, lp.required_points, lp.name
+        SELECT lc.*, lp.required_points, lp.name, m.company_name
         FROM loyalty_cards lc
         JOIN loyalty_programs lp ON lc.loyalty_program_id = lp.id
+        JOIN merchants m ON lp.merchant_id = m.id
         WHERE lc.id = $1
         `, [params.loyalty_card_id])
         .then((data) => {
@@ -68,12 +70,13 @@ const giveLoyaltyStamps = (req) => {
 };
 exports.giveLoyaltyStamps = giveLoyaltyStamps;
 const postLoyaltyCard = (req) => {
-    const { loyalty_program_id, user_id } = req.params;
+    const { user_id } = req.params;
+    const { loyalty_program_id } = req.body;
     return connection_1.default.query(`SELECT * FROM loyalty_cards WHERE loyalty_program_id = $1 AND user_id = $2`, [loyalty_program_id, user_id])
         .then((data) => {
         if (!data.rows.length) {
-            return connection_1.default.query(`INSERT INTO loyalty_cards (loyalty_program_id, user_id, created_at)
-            VALUES ($1, $2, CURRENT TIMESTAMP)
+            return connection_1.default.query(`INSERT INTO loyalty_cards (loyalty_program_id, user_id)
+            VALUES ($1, $2)
             RETURNING *`, [loyalty_program_id, user_id]);
         }
     })
