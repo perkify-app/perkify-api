@@ -9,7 +9,7 @@
 
 An API fully built using Typescript, Express and Node.js
 
-For [full app documentation refer to the front-end readme](https://github.com/perkify-app/perkify-react-native)
+For [full app documentation refer to the front-end readme](https://github.com/perkify-app/perkify-react-native?tab=readme-ov-file#perkify---a-centralised-place-for-users-to-store-their-loyalty-cards-and-a-platform-for-merchants-to-advertise-their-loyalty-programs)
 
 ## Getting Started
 Follow these instructions to get a local copy up-and-running.
