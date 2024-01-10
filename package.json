@@ -9,6 +9,8 @@
     "test": "jest",
     "prepare": "husky install",
     "start": "ts-node listen.ts",
+    "build":"npm run tsc && node ./dist/listen.js",
+    "tsc": "tsc",
     "seed-prod": "NODE_ENV=production npm run seed"
   },
   "repository": {
