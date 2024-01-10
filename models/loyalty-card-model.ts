@@ -7,9 +7,10 @@ export const allLoyaltyCards = (req: any) => {
     if (sort_by.toLowerCase() !== 'points' && sort_by.toLowerCase() !== 'created_at') sort_by = 'id'
     if (order.toLowerCase() !== 'desc' && order.toLowerCase() !== 'asc') order = 'desc'
     let queryStr = `
-    SELECT lc.*, lp.required_points, lp.name
+    SELECT lc.*, lp.required_points, lp.name, m.company_name
     FROM loyalty_cards lc
-    JOIN loyalty_programs lp ON lc.loyalty_program_id = lp.id`
+    JOIN loyalty_programs lp ON lc.loyalty_program_id = lp.id    
+    JOIN merchants m ON lp.merchant_id = m.id`
     if (id) queryStr += ` WHERE lc.id = '${id}'`
     if (user_id && !id) queryStr += ` WHERE lc.user_id = '${user_id}'`
     if (user_id && id) queryStr += ` AND lc.user_id = '${user_id}'`
@@ -33,9 +34,10 @@ export const allLoyaltyCards = (req: any) => {
 export const specificLoyaltyCard = (req: any) => {
     const { params } = req
     return db.query(`
-        SELECT lc.*, lp.required_points, lp.name
+        SELECT lc.*, lp.required_points, lp.name, m.company_name
         FROM loyalty_cards lc
         JOIN loyalty_programs lp ON lc.loyalty_program_id = lp.id
+        JOIN merchants m ON lp.merchant_id = m.id
         WHERE lc.id = $1
         `, [params.loyalty_card_id])
         .then((data: any) => {
