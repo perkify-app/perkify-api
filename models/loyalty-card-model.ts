@@ -63,7 +63,7 @@ export const postLoyaltyCard = (req: any) => {
     })
     .then((data:any) => {
         if (data) { 
-            return data.rows 
+            return data.rows[0] 
         } else {
             throw {status: 400, msg: 'BAD REQUEST: Card Already Exists'}
         }
