@@ -8,6 +8,7 @@
 ## About the Project
 
 An API fully built using Typescript, Express and Node.js
+
 For [full app documentation refer to the front-end readme](https://github.com/perkify-app/perkify-react-native)
 
 ## Getting Started
