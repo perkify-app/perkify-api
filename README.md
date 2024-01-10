@@ -1,10 +1,9 @@
-<div align="center">
-### Perkify API
+# Perkify API
 [![Typescript - ^5.3.3](https://img.shields.io/badge/Typescript-^5.3.3-blue?logo=typescript&logoColor=white)](https://www.npmjs.com/package/typescript)
 [![Node.js - ^20.4.0](https://img.shields.io/static/v1?label=Node.js&message=^20.4.0&color=blue&logo=node.js&logoColor=white)](https://www.nodejs.org)
 [![Express - ^4.18.2](https://img.shields.io/badge/Express-^4.18.2-blue?logo=express&logoColor=white)](https://www.npmjs.com/package/express)
+         
 <a href="https://perkify-api.onrender.com/api">View Hosted Version</a>
-</div>
 
 ## About the Project
 
