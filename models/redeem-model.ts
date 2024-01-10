@@ -3,8 +3,9 @@ import db from "../db/connection";
 export const redeemLoyaltyCard = (req: any) => {
     const { params } = req
         return db.query(`
-        SELECT * FROM loyalty_cards
-        JOIN loyalty_programs ON loyalty_cards.loyalty_program_id = loyalty_programs.id
+        SELECT lc.*, lp.required_points, lp.name
+        FROM loyalty_cards lc
+        JOIN loyalty_programs lp ON lc.loyalty_program_id = lp.id   
         WHERE user_id = $1
         AND loyalty_cards.id = $2
         AND loyalty_cards.points = loyalty_programs.required_points;`, [params.user_id, params.loyalty_card_id])
