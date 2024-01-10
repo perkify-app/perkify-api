@@ -1,5 +1,11 @@
 import db from '../db/connection'
 
+export const allLoyaltyPrograms = () => {
+        return db.query(`SELECT * FROM loyalty_programs`)
+    .then((data: any) => {
+        return data.rows
+    })
+};
 export const merchantLoyaltyPrograms = (req: any) => {
     const { params } = req
         return db.query(`

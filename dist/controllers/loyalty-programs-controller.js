@@ -1,7 +1,17 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.deleteLoyaltyProgram = exports.postLoyaltyProgram = exports.getSpecificMerchantProgram = exports.getAllMerchantPrograms = void 0;
+exports.deleteLoyaltyProgram = exports.postLoyaltyProgram = exports.getSpecificMerchantProgram = exports.getAllMerchantPrograms = exports.getAllPrograms = void 0;
 const loyalty_programs_model_1 = require("../models/loyalty-programs-model");
+const getAllPrograms = (req, res, next) => {
+    (0, loyalty_programs_model_1.allLoyaltyPrograms)()
+        .then((data) => {
+        res.status(200).send({ loyalty_programs: data });
+    })
+        .catch((err) => {
+        next(err);
+    });
+};
+exports.getAllPrograms = getAllPrograms;
 const getAllMerchantPrograms = (req, res, next) => {
     (0, loyalty_programs_model_1.merchantLoyaltyPrograms)(req)
         .then((data) => {
