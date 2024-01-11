@@ -31,7 +31,10 @@ const Login = (email: string, password: string, name: string, merchant_id?: stri
             SET name = $2,
             merchant_id = $3`, [data.user.id, name, merchant_id]
         );
-        res.send(data.session.access_token);
+        res.send({
+            access_token: data.session.access_token,
+            user_id: data.user.id
+        });
     }
 }
 app.get("/login/user", Login("b@b.com", "123456", "Mr User"));
