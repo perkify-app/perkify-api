@@ -53,7 +53,7 @@ app.get("/api/users/:user_id/loyalty_cards", requireAuth(ownUserOrAdmin), getUse
 app.post("/api/users/:user_id/loyalty_cards", requireAuth(ownUserOrAdmin), postUserLoyaltyCard);
 app.get("/api/users/:user_id/loyalty_cards/:loyalty_card_id", requireAuth(ownUserOrAdmin), getUserLoyaltyCard);
 
-app.get("/api/merchants", getMerchants);
+app.get("/api/merchants", requireAuth("user"), getMerchants);
 app.get("/api/merchants/:merchant_id", requireAuth(ownMerchantOrAdmin), getMerchant);
 app.patch("/api/merchants/:merchant_id", requireAuth(ownMerchantOrAdmin), patchMerchant);
 
@@ -64,14 +64,14 @@ app.delete("/api/merchants/:merchant_id/loyalty_programs/:loyalty_program_id", r
 
 app.get("/api/loyalty_cards", requireAuth("admin"), getLoyaltyCards);
 app.get("/api/loyalty_cards/:loyalty_card_id", requireAuth("admin"), getLoyaltyCard);
-app.patch("/api/loyalty_cards/:loyalty_card_id", requireAuth("admin", "merchant"), patchLoyaltyCard);
-app.delete("/api/loyalty_cards/:loyalty_card_id", requireAuth("admin", "merchant"), deleteLoyaltyCard);
+app.patch("/api/loyalty_cards/:loyalty_card_id", requireAuth("admin"), patchLoyaltyCard);
+app.delete("/api/loyalty_cards/:loyalty_card_id", requireAuth("admin"), deleteLoyaltyCard);
 app.get("/api/loyalty_cards/:loyalty_card_id/redeem", redeemLoyaltyCard); //TODO - To be changed
 
-app.post("/api/loyalty_programs", postLoyaltyProgram);
-app.get("/api/loyalty_programs", getLoyaltyPrograms);
-app.get("/api/loyalty_programs/:loyalty_program_id", getLoyaltyProgram);
-app.delete("/api/loyalty_programs/:loyalty_program_id", deleteLoyaltyProgram);
+app.get("/api/loyalty_programs", requireAuth("admin", "merchant"), getLoyaltyPrograms);
+app.post("/api/loyalty_programs", requireAuth("admin"), postLoyaltyProgram);
+app.get("/api/loyalty_programs/:loyalty_program_id", requireAuth("admin"), getLoyaltyProgram);
+app.delete("/api/loyalty_programs/:loyalty_program_id", requireAuth("admin"), deleteLoyaltyProgram);
 
 app.use(apiErrorHandler);
 app.use(sqlErrorHandler);
