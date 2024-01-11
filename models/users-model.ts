@@ -2,6 +2,12 @@ import ApiError from "../classes/ApiError";
 import db from "../db/connection";
 import IUser from "../db/interfaces/User";
 
+
+export const getAllUsers = async () => {
+    const data = await db.query(`SELECT * FROM users`);
+    return data.rows;
+};
+
 export const getUserById = async (user_id: string) => {
     const data = await db.query(`SELECT * FROM users WHERE id = $1;`, [user_id]);
 

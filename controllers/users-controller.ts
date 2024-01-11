@@ -2,6 +2,13 @@ import { Request, Response, NextFunction } from 'express';
 import * as userModel from '../models/users-model';
 import * as loyaltyCardModel from '../models/loyalty-card-model';
 
+
+export const getUsers = (req: Request, res: Response, next: NextFunction) => {
+    userModel.getAllUsers()
+        .then((users: any) => res.status(200).send({ users }))
+        .catch((err: Error) => next(err))
+};
+
 export const getUser = (req: Request, res: Response, next: NextFunction) => {
     const { user_id } = req.params;
     userModel.getUserById(user_id)

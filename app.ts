@@ -1,7 +1,7 @@
 import cors from 'cors';
 import express from 'express';
 import getEndpointsInfo from './controllers/api-controller';
-import { deleteUser, getUser, getUserLoyaltyCard, getUserLoyaltyCards, patchUser, postUserLoyaltyCard } from './controllers/users-controller';
+import { getUsers, deleteUser, getUser, getUserLoyaltyCard, getUserLoyaltyCards, patchUser, postUserLoyaltyCard } from './controllers/users-controller';
 import { deleteLoyaltyCard, getLoyaltyCard, getLoyaltyCards, patchLoyaltyCard, redeemLoyaltyCard } from './controllers/loyalty-card-controller';
 import { getMerchant, getMerchants, patchMerchant, getMerchantLoyaltyPrograms, getMerchantLoyaltyProgram, postMerchantLoyaltyProgram, deleteMerchantLoyaltyProgram } from './controllers/merchant-controller';
 import { getLoyaltyPrograms, getLoyaltyProgram, postLoyaltyProgram, deleteLoyaltyProgram } from './controllers/loyalty-programs-controller';
@@ -51,6 +51,7 @@ app.get("/api", getEndpointsInfo);
 
 app.patch("/api/admin/users/:user_id", requireAuth("admin"), patchAdminUser);
 
+app.get("/api/users/", requireAuth("admin"), getUsers);
 app.get("/api/users/:user_id", requireAuth(ownUserOrAdmin), getUser);
 app.patch("/api/users/:user_id", requireAuth(ownUserOrAdmin), patchUser);
 app.delete("/api/users/:user_id", requireAuth(ownUserOrAdmin), deleteUser);
