@@ -8,6 +8,6 @@ describe("/api", () => {
         return request(app)
             .get("/api")
             .expect(200)
-            .then(({ body }) => expect(body.endpoints).toEqual(endpointsInfo));
+            .then(({ body }) => expect(body).toEqual(endpointsInfo));
     });
 });

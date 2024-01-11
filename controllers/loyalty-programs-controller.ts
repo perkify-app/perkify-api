@@ -1,48 +1,26 @@
 import { Request, Response, NextFunction } from 'express';
-import { allLoyaltyPrograms, createLoyaltyPrograms, deleteMerchantLoyaltyProgram, merchantLoyaltyPrograms, specificMerchantLoyaltyProgram } from '../models/loyalty-programs-model';
+import * as loyaltyProgramModel from '../models/loyalty-programs-model';
 
-export const getAllPrograms = (req: Request, res: Response, next: NextFunction) => {
-    allLoyaltyPrograms()
-    .then((data: any) => {
-        res.status(200).send({ loyalty_programs: data })
-    })
-    .catch((err: any) => {
-        next(err)
-    })
+export const getLoyaltyPrograms = (req: Request, res: Response, next: NextFunction) => {
+    loyaltyProgramModel.getAllLoyaltyPrograms({})
+        .then((loyalty_programs: any) => res.status(200).send({ loyalty_programs }))
+        .catch((err: Error) => next(err));
 };
-export const getAllMerchantPrograms = (req: Request, res: Response, next: NextFunction) => {
-    merchantLoyaltyPrograms(req)
-    .then((data: any) => {
-        res.status(200).send({ loyalty_programs: data })
-    })
-    .catch((err: any) => {
-        next(err)
-    })
+
+export const getLoyaltyProgram = (req: Request, res: Response, next: NextFunction) => {
+    loyaltyProgramModel.getLoyaltyProgramById(+req.params.loyalty_program_id)
+        .then((loyalty_program: any) => res.status(200).send({ loyalty_program }))
+        .catch((err: Error) => next(err));
 };
-export const getSpecificMerchantProgram = (req: Request, res: Response, next: NextFunction) => {
-    specificMerchantLoyaltyProgram(req)
-    .then((data: any) => {
-        res.status(200).send(data)
-    })
-    .catch((err: any) => {
-        next(err)
-    })
-};
+
 export const postLoyaltyProgram = (req: Request, res: Response, next: NextFunction) => {
-    createLoyaltyPrograms(req)
-    .then((data: any) => {
-        res.status(201).send(data)
-    })
-    .catch((err: any) => {
-        next(err)
-    })
+    loyaltyProgramModel.createLoyaltyProgram(req.body)
+        .then((loyalty_program: any) => res.status(201).send({ loyalty_program }))
+        .catch((err: Error) => next(err));
 };
+
 export const deleteLoyaltyProgram = (req: Request, res: Response, next: NextFunction) => {
-    deleteMerchantLoyaltyProgram(req)
-    .then((data: any) => {
-        res.status(204).send(data)
-    })
-    .catch((err: any) => {
-        next(err)
-    })
+    loyaltyProgramModel.removeLoyaltyProgram(+req.params.loyalty_program_id)
+        .then(() => res.status(204).send())
+        .catch((err: Error) => next(err));
 };

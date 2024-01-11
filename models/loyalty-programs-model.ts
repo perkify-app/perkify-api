@@ -1,43 +1,43 @@
+import ApiError from '../classes/ApiError';
 import db from '../db/connection'
+import ILoyaltyProgram from '../db/interfaces/LoyaltyProgram';
 
-export const allLoyaltyPrograms = () => {
-        return db.query(`SELECT * FROM loyalty_programs`)
-    .then((data: any) => {
-        return data.rows
-    })
+
+export interface ILoyaltyProgramParams {
+    merchant_id?: string
+}
+
+export const getAllLoyaltyPrograms = async ({ merchant_id }: ILoyaltyProgramParams) => {
+    const values: any[] = [];
+    const whereStatement = merchant_id && values.push(merchant_id) ? "WHERE merchant_id = $1" : "";
+
+    const data = await db.query(`SELECT * FROM loyalty_programs ${whereStatement}`, values);
+    return data.rows;
 };
-export const merchantLoyaltyPrograms = (req: any) => {
-    const { params } = req
-        return db.query(`
-        SELECT * FROM loyalty_programs
-        WHERE merchant_id = $1
-        `, [params.id])
-    .then((data: any) => {
-        return data.rows
-    })
+
+export const getLoyaltyProgramById = async (loyalty_program_id: number, merchant_id?: string) => {
+    const values: any[] = [loyalty_program_id];
+
+    const whereStatement = `WHERE id = $1 ${merchant_id && values.push(merchant_id) ? `AND merchant_id = $${values.length}` : ""}`;
+
+    const data = await db.query(`SELECT * FROM loyalty_programs ${whereStatement}`, values);
+
+    if (!data.rowCount) throw new ApiError(404, "Loyalty program not found");
+    return data.rows[0];
 };
-export const specificMerchantLoyaltyProgram = (req: any) => {
-    const { params } = req
-        return db.query(`
-        SELECT * FROM loyalty_programs
-        WHERE merchant_id = $1 AND id = $2
-        `, [params.id, params.program_id])
-    .then((data: any) => {
-        return data.rows[0]
-    })
-};
-export const createLoyaltyPrograms = (req: any) => {
-    const { body, params } = req
-        return db.query(`
+
+export const createLoyaltyProgram = async ({ merchant_id, name, required_points }: ILoyaltyProgram) => {
+    const data = await db.query(`
         INSERT INTO loyalty_programs(merchant_id, name, required_points)
         VALUES ($1, $2, $3)
-        RETURNING *`, [params.id, body.name, body.required_points])
-    .then((data: any) => {
-        return data.rows
-    })
+        RETURNING *`, [merchant_id, name, required_points]);
+
+    return data.rows;
 };
-export const deleteMerchantLoyaltyProgram = (req: any) => {
-    const { params } = req
-        return db.query(`
-        DELETE FROM loyalty_programs WHERE (merchant_id = $1 AND id = $2);`, [params.id, params.program_id])
+
+export const removeLoyaltyProgram = async (loyalty_program_id: number, merchant_id?: string) => {
+    const values: any[] = [loyalty_program_id];
+
+    const whereStatement = `WHERE id = $1 ${merchant_id && values.push(merchant_id) ? `AND merchant_id = $${values.length}` : ""}`;
+    await db.query(`DELETE FROM loyalty_programs ${whereStatement}`, values);
 };
