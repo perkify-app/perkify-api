@@ -1,5 +1,5 @@
 import { Request, Response, NextFunction } from 'express';
-import * as userModel from '../models/users-model'
+import * as userModel from '../models/users-model';
 import * as loyaltyCardModel from '../models/loyalty-card-model';
 
 export const getUser = (req: Request, res: Response, next: NextFunction) => {
@@ -7,6 +7,14 @@ export const getUser = (req: Request, res: Response, next: NextFunction) => {
     userModel.getUserById(user_id)
         .then((user: any) => res.status(200).send({ user }))
         .catch((err: Error) => next(err))
+};
+
+export const patchUser = (req: Request, res: Response, next: NextFunction) => {
+    const { user_id } = req.params;
+    const { name } = req.body;
+    userModel.updateUser(user_id, { name } as any)
+        .then((user: any) => res.status(200).send({ user }))
+        .catch((err: Error) => next(err));
 };
 
 export const deleteUser = (req: Request, res: Response, next: NextFunction) => {

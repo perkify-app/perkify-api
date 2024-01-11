@@ -1,14 +1,14 @@
 import cors from 'cors';
 import express from 'express';
 import getEndpointsInfo from './controllers/api-controller';
-import { deleteUser, getUser, getUserLoyaltyCard, getUserLoyaltyCards, postUserLoyaltyCard } from './controllers/users-controller';
+import { deleteUser, getUser, getUserLoyaltyCard, getUserLoyaltyCards, patchUser, postUserLoyaltyCard } from './controllers/users-controller';
 import { deleteLoyaltyCard, getLoyaltyCard, getLoyaltyCards, patchLoyaltyCard, redeemLoyaltyCard } from './controllers/loyalty-card-controller';
 import { getMerchant, getMerchants, patchMerchant, getMerchantLoyaltyPrograms, getMerchantLoyaltyProgram, postMerchantLoyaltyProgram, deleteMerchantLoyaltyProgram } from './controllers/merchant-controller';
 import { getLoyaltyPrograms, getLoyaltyProgram, postLoyaltyProgram, deleteLoyaltyProgram } from './controllers/loyalty-programs-controller';
+import { patchAdminUser } from './controllers/admin-controller';
 import { fourOhFourHandler, apiErrorHandler, errorHandler, sqlErrorHandler } from './errors-handler';
 import jwtHeaderAuth from './middleware/jwtHeaderAuth';
 import requireAuth from './middleware/requireAuth';
-import db from './db/connection';
 
 
 const app = express();
@@ -16,8 +16,8 @@ app.use(cors());
 app.use(express.json());
 app.use(jwtHeaderAuth());
 
-//Testing
-
+//Testing - TODO - Remove
+import db from './db/connection';
 require('dotenv').config({ path: `${__dirname}/.env.config` });
 const Login = (email: string, password: string, name: string, merchant_id?: string) => {
     return async (req: any, res: any) => {
@@ -46,7 +46,10 @@ const ownMerchantOrAdmin = ({ user, params }: any) => user.roles.includes("admin
 
 app.get("/api", getEndpointsInfo);
 
+app.patch("/api/admin/users/:user_id", requireAuth("admin"), patchAdminUser);
+
 app.get("/api/users/:user_id", requireAuth(ownUserOrAdmin), getUser);
+app.patch("/api/users/:user_id", requireAuth(ownUserOrAdmin), patchUser);
 app.delete("/api/users/:user_id", requireAuth(ownUserOrAdmin), deleteUser);
 
 app.get("/api/users/:user_id/loyalty_cards", requireAuth(ownUserOrAdmin), getUserLoyaltyCards);
