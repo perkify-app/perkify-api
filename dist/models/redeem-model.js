@@ -11,9 +11,9 @@ const redeemLoyaltyCard = (req) => {
         SELECT lc.*, lp.required_points, lp.name
         FROM loyalty_cards lc
         JOIN loyalty_programs lp ON lc.loyalty_program_id = lp.id   
-        WHERE user_id = $1
-        AND loyalty_cards.id = $2
-        AND loyalty_cards.points = loyalty_programs.required_points;`, [params.user_id, params.loyalty_card_id])
+        WHERE lc.user_id = $1
+        AND lc.id = $2
+        AND lc.points = lp.required_points;`, [params.user_id, params.loyalty_card_id])
         .then((data) => {
         if (data.rows.length) {
             return connection_1.default.query(`
