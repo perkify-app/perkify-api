@@ -1,40 +1,71 @@
-import express from 'express';
 import cors from 'cors';
-
+import express from 'express';
 import getEndpointsInfo from './controllers/api-controller';
 import { deleteUser, getUser, getUserLoyaltyCard, getUserLoyaltyCards, postUserLoyaltyCard } from './controllers/users-controller';
 import { deleteLoyaltyCard, getLoyaltyCard, getLoyaltyCards, patchLoyaltyCard, redeemLoyaltyCard } from './controllers/loyalty-card-controller';
 import { getMerchant, getMerchants, patchMerchant, getMerchantLoyaltyPrograms, getMerchantLoyaltyProgram, postMerchantLoyaltyProgram, deleteMerchantLoyaltyProgram } from './controllers/merchant-controller';
 import { getLoyaltyPrograms, getLoyaltyProgram, postLoyaltyProgram, deleteLoyaltyProgram } from './controllers/loyalty-programs-controller';
-
 import { fourOhFourHandler, apiErrorHandler, errorHandler, sqlErrorHandler } from './errors-handler';
+import jwtHeaderAuth from './middleware/jwtHeaderAuth';
+import requireAuth from './middleware/requireAuth';
+import db from './db/connection';
+
 
 const app = express();
 app.use(cors());
 app.use(express.json());
+app.use(jwtHeaderAuth());
+
+//Testing
+
+require('dotenv').config({ path: `${__dirname}/.env.config` });
+const Login = (email: string, password: string, name: string, merchant_id?: string) => {
+    return async (req: any, res: any) => {
+        const supabase = require('@supabase/supabase-js').createClient(process.env.SUPABASE_URL, process.env.PUBLIC_ANON_KEY);
+        const { data } = await supabase.auth.signInWithPassword({ email, password });
+
+        await db.query(`
+            INSERT INTO users (id, name, merchant_id)
+            VALUES ($1, $2, $3)
+            ON CONFLICT (id) DO UPDATE
+            SET name = $2,
+            merchant_id = $3`, [data.user.id, name, merchant_id]
+        );
+        res.send(data.session.access_token);
+    }
+}
+app.get("/login/user", Login("b@b.com", "123456", "Mr User"));
+app.get("/login/merchant", Login("a@a.com", "1234", "Mr Merchant", "M2"));
+app.get("/login/admin", Login("admin@admin.com", "123456", "Mr Admin"));
+//
+
+
+const ownUserOrAdmin = ({ user, params }: any) => user.roles.includes("admin") || user.id === params.user_id;
+const ownMerchantOrAdmin = ({ user, params }: any) => user.roles.includes("admin") || user.merchant_id === params.merchant_id;
+
 
 app.get("/api", getEndpointsInfo);
 
-app.get("/api/users/:user_id", getUser);
-app.delete("/api/users/:user_id", deleteUser);
+app.get("/api/users/:user_id", requireAuth(ownUserOrAdmin), getUser);
+app.delete("/api/users/:user_id", requireAuth(ownUserOrAdmin), deleteUser);
 
-app.get("/api/users/:user_id/loyalty_cards", getUserLoyaltyCards);
-app.get("/api/users/:user_id/loyalty_cards/:loyalty_card_id", getUserLoyaltyCard);
-app.post("/api/users/:user_id/loyalty_cards", postUserLoyaltyCard);
+app.get("/api/users/:user_id/loyalty_cards", requireAuth(ownUserOrAdmin), getUserLoyaltyCards);
+app.post("/api/users/:user_id/loyalty_cards", requireAuth(ownUserOrAdmin), postUserLoyaltyCard);
+app.get("/api/users/:user_id/loyalty_cards/:loyalty_card_id", requireAuth(ownUserOrAdmin), getUserLoyaltyCard);
 
 app.get("/api/merchants", getMerchants);
-app.get("/api/merchants/:merchant_id", getMerchant);
-app.patch("/api/merchants/:merchant_id", patchMerchant);
+app.get("/api/merchants/:merchant_id", requireAuth(ownMerchantOrAdmin), getMerchant);
+app.patch("/api/merchants/:merchant_id", requireAuth(ownMerchantOrAdmin), patchMerchant);
 
-app.post("/api/merchants/:merchant_id/loyalty_programs", postMerchantLoyaltyProgram);
-app.get("/api/merchants/:merchant_id/loyalty_programs", getMerchantLoyaltyPrograms);
-app.get("/api/merchants/:merchant_id/loyalty_programs/:loyalty_program_id", getMerchantLoyaltyProgram);
-app.delete("/api/merchants/:merchant_id/loyalty_programs/:loyalty_program_id", deleteMerchantLoyaltyProgram);
+app.post("/api/merchants/:merchant_id/loyalty_programs", requireAuth(ownMerchantOrAdmin), postMerchantLoyaltyProgram);
+app.get("/api/merchants/:merchant_id/loyalty_programs", requireAuth(ownMerchantOrAdmin), getMerchantLoyaltyPrograms);
+app.get("/api/merchants/:merchant_id/loyalty_programs/:loyalty_program_id", requireAuth(ownMerchantOrAdmin), getMerchantLoyaltyProgram);
+app.delete("/api/merchants/:merchant_id/loyalty_programs/:loyalty_program_id", requireAuth(ownMerchantOrAdmin), deleteMerchantLoyaltyProgram);
 
-app.get("/api/loyalty_cards", getLoyaltyCards);                         //Admin only??
-app.get("/api/loyalty_cards/:loyalty_card_id", getLoyaltyCard);         //Admin only??
-app.patch("/api/loyalty_cards/:loyalty_card_id", patchLoyaltyCard);     //Merchant only??
-app.delete("/api/loyalty_cards/:loyalty_card_id", deleteLoyaltyCard);   //Merchant only??
+app.get("/api/loyalty_cards", requireAuth("admin"), getLoyaltyCards);
+app.get("/api/loyalty_cards/:loyalty_card_id", requireAuth("admin"), getLoyaltyCard);
+app.patch("/api/loyalty_cards/:loyalty_card_id", requireAuth("admin", "merchant"), patchLoyaltyCard);
+app.delete("/api/loyalty_cards/:loyalty_card_id", requireAuth("admin", "merchant"), deleteLoyaltyCard);
 app.get("/api/loyalty_cards/:loyalty_card_id/redeem", redeemLoyaltyCard); //TODO - To be changed
 
 app.post("/api/loyalty_programs", postLoyaltyProgram);
