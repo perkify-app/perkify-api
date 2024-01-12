@@ -2,6 +2,7 @@ import ApiError from "../classes/ApiError";
 import db from "../db/connection";
 import IMerchant from "../db/interfaces/Merchant";
 
+
 export const getAllMerchants = async () => {
     const data = await db.query(`
         SELECT m.*, mc.name category FROM merchants m
@@ -9,6 +10,7 @@ export const getAllMerchants = async () => {
     `);
     return data.rows;
 };
+
 export const getMerchantById = async (merchant_id: string) => {
     const data = await db.query(`
         SELECT m.*, mc.name category FROM merchants m

@@ -5,7 +5,7 @@ import db from '../db/connection';
 
 export interface UserContext {
     id: string,
-    merchant_id: string,
+    merchant_id?: string,
     roles: string[]
 }
 
@@ -23,10 +23,13 @@ export default function jwtHeaderAuth() {
 
             const { sub, user_metadata } = jwt.verify(accessToken, process.env.JWT_KEY) as any;
 
-            const { merchant_id } = (await db.query("SELECT merchant_id FROM users WHERE id = $1", [sub])).rows[0] as any;
-            //if (!user.merchant_id) delete user["merchant_id"];
+            const merchant_id = (await db.query("SELECT merchant_id FROM users WHERE id = $1", [sub])).rows[0]?.merchant_id;
 
-            const user: UserContext = { id: sub, roles: user_metadata?.roles ?? [], merchant_id };
+            const user: UserContext = {
+                id: sub,
+                roles: user_metadata?.roles ?? [],
+                ...merchant_id && { merchant_id }
+            };
 
             (req as any).user = user;
         }
